@@ -1,0 +1,16 @@
+* 学习
+** 版本管理工具
+*** git
+git基础知识：[[http://www.ibm.com/developerworks/cn/linux/l-git/][使用 Git 管理源代码]]  [[http://www.opensourceforce.org/news/kaiyuanxinwen/20100423/117435.html][Git和Github初次使用]]
+my github:
+创建本地新项目工作树
+# mkdir new-project
+# cd new-project
+# git init
+# touch README
+# git add README
+# git commit -m 'first commit'
+定义远程服务器别名origin
+#  git remote add origin git@github.com:xxx/new-project.git   
+本地和远程合并，本地默认分支为master
+# git push origin master  
