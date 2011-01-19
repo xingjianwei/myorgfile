@@ -14,3 +14,5 @@ my github:
 #  git remote add origin git@github.com:xxx/new-project.git   
 本地和远程合并，本地默认分支为master
 # git push origin master  
+
+
