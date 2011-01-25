@@ -16,4 +16,26 @@ my github:
 # git push origin master  
 
 
-**测试管理工具
+** 测试管理工具
+*** testlink
+    http://192.168.100.5/tests
+
+
+** Linux SG
+osslab: [[http://www.osslab.org.tw]]
+[[http://hi.baidu.com/widebright/blog/item/e1278501f75ff3dd267fb57f.html][使用SG_IO发送SCSI 指令测试底层驱动的scatter-gather 功能]]
+
+[[http://blog.csdn.net/force_eagle/archive/2010/04/20/5507606.aspx][在内核模块中通过系统调用ioctl获取ATA/SCSI硬盘序列号]]
+
+[[http://hi.baidu.com/suping/blog/item/db3d9513ad372e886538db1a.html][Linux服务器监控之存储网络设备监测]]
+
+[[http://search.luky.org/ML/linux-kernel.2005/msg29654.html][SAS domain layout for Linux sysfs]]
+
+
+** Linux内核调试
+
+[[http://www.shangshuwu.cn/index.php/Linux%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95][Linux内核调试方法]]
+
+[[http://www.cublog.cn/u1/56284/showart_2303524.html][使用 Crash 工具分析 Linux dump 文件]]
+
+[[http://www.xxlinux.com/linux/article/development/kernel/20100423/18211.html][Linux内核崩溃转储机制]]
