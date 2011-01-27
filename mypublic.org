@@ -39,3 +39,73 @@ osslab: [[http://www.osslab.org.tw]]
 [[http://www.cublog.cn/u1/56284/showart_2303524.html][使用 Crash 工具分析 Linux dump 文件]]
 
 [[http://www.xxlinux.com/linux/article/development/kernel/20100423/18211.html][Linux内核崩溃转储机制]]
+
+[[http://www.cnblogs.com/wwang/archive/2010/11/19/1881304.html][Ubuntu的内核转储工具]]
+
+[[http://www.cnblogs.com/wwang/archive/2010/11/14/1876735.html][Linux内核的Oops]]
+
+*** ubuntu 10.04server
+update-grub
+
+**** sourcelist
+deb http://archive.ubuntu.com/ubuntu/ lucid main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ lucid-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ lucid-updates main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ lucid-proposed main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ lucid-backports main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ lucid main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ lucid-security main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ lucid-updates main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ lucid-proposed main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ lucid-backports main restricted universe multiverse**  source.list
+
+**** kdump install
+apt-get update
+apt-get dist-upgrade
+
+apt-get  install  build-essential
+apt-get install linux-crashdump
+service kdump start
+echo c > /proc/sysrq-trigger
+kernel oops and reboot...
+
+cp /prov/vmcore  .
+wget http://ddebs.ubuntu.com/pool/main/l/linux/
+dpkg -i *.ddeb
+
+**** kernel source compile
+[[http://blog.csdn.net/jsufcz/archive/2009/09/23/4582712.aspx][ubuntu下编译内核]]
+apt-get install linux-source
+apt-get install build-essential kernel-package   libncurses5-dev
+#cp /boot/config-`uname -r` ./.config
+make menuconfig
+make-kpkg clean
+
+make-kpkg -initrd --initrd --append-to-version=dellr710 kernel_image kernel-headers
+
+** scsi相关知识
+
+   [[http://blog.csdn.net/fudan_abc/archive/2007/12/10/1927945.aspx][Linux那些事儿之我是SCSI硬盘]]
+
+*** disk DPO & FUA
+磁盘上必须有缓存，用来接收指令和数据，还被用来进行预读。磁盘缓存时刻处于打开状态。有很多文档资料上提到某些情况下可以“禁用”磁盘缓存，这是容易造成误解的说法。缓存在磁盘上表现为一块电路板上的RAM芯片，其容量大小是固定的，目前有2MB,8MB, 16MB, 32MB等容量规格。所谓“禁用”磁盘缓存值得其实是write through模式。即磁盘收到写指令和数据后，必须先将其写入盘片，然后才向控制器返回成功信号，这样就相当于“禁用”了缓存。但是实际上，指令和数据首先到达的一定是缓存。
+
+     SCSI指令中有两个参数可以控制对磁盘缓存的使用。
+
+     .DPO(Disable Page Out): 这个参数的作用是禁止缓存中的数据页（缓存中的数据以页为单位存在）被换出。不管读还是写，被置了这个参数位的数据在缓存空间不够的时候不能覆盖缓存中的其他数据，也就是不能将其他数据换出。但如果命中，即读写的数据已经在缓存中，则从或往缓存中读写。
+
+     .FUA(Force Unit  Access):这个参数的作用是强制盘片访问。对于写操作，磁盘必须将收到的数据写入盘片后才返回成功信号，也就是进行write through。对于度操作，磁盘收到指令后，直接去盘片上读取数据，而不搜索缓存。
+
+     所以，当某个SCSI指令的DPO和FUA两个参数的值都被置为1时，便相当于完全不使用缓存的提速功能了，但是指令和数据依然会存放到缓存中，只一点需要分清和理解。
+
+下面是百度上关于硬盘缓存区的解释：
+
+硬盘的缓冲区
+　　硬盘的缓冲区是硬盘与外部总线交换数据的场所。硬盘的读数据的过程是将磁信号转化为电信号后，通过缓冲区一次次地填充与清空，再填充，再清空，一步步按照PCI总线的周期送出，可见，缓冲区的作用是相当重要的。它的作用也是提高性能，但是它与缓存的不同之处在于：一、它是容量固定的硬件，而不像缓存是可以由操作系统在内存中动态分配的。二、它对性能的影响大大超过磁盘缓存对性能的影响，因为如果没有缓 冲区，就会要求每传一个字（通常是4字节）就需要读一次磁盘或写一次磁盘。
+
+什么是磁盘缓存
+　　磁盘缓存分为读缓存和写缓存。
+
+      读缓存是指，操作系统为已读取的文件数据，在内存较空闲的情况下留在内存空间中（这个内存空间被称之为“内存池”），当下次软件或用户再次读取同一文件时就不必重新从磁盘上读取，从而提高速度。
+
+　　写缓存实际上就是将要写入磁盘的数据先保存于系统为写缓存分配的内存空间中，当保存到内存池中的数据达到一个程度时，便将数据保存到硬盘中。这样可以减少实际的磁盘操作，有效的保护磁盘免于重复的读写操作而导致的损坏，也能减少写入所需的时间。（这里的磁盘缓存不是最上面的磁盘缓存）
