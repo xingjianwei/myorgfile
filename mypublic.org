@@ -1,6 +1,7 @@
 * 学习
 ** 版本管理工具
 *** git
+[[http://git-scm.com/][git website]]
 git基础知识：[[http://www.ibm.com/developerworks/cn/linux/l-git/][使用 Git 管理源代码]]  [[http://www.opensourceforce.org/news/kaiyuanxinwen/20100423/117435.html][Git和Github初次使用]]
 my github:
 创建本地新项目工作树
@@ -24,7 +25,7 @@ my github:
 ** Linux SG
 osslab: [[http://www.osslab.org.tw]]
 [[http://hi.baidu.com/widebright/blog/item/e1278501f75ff3dd267fb57f.html][使用SG_IO发送SCSI 指令测试底层驱动的scatter-gather 功能]]
-
+y
 [[http://blog.csdn.net/force_eagle/archive/2010/04/20/5507606.aspx][在内核模块中通过系统调用ioctl获取ATA/SCSI硬盘序列号]]
 
 [[http://hi.baidu.com/suping/blog/item/db3d9513ad372e886538db1a.html][Linux服务器监控之存储网络设备监测]]
@@ -38,7 +39,7 @@ osslab: [[http://www.osslab.org.tw]]
 
 [[http://www.cublog.cn/u1/56284/showart_2303524.html][使用 Crash 工具分析 Linux dump 文件]]
 
-[[http://www.xxlinux.com/linux/article/development/kernel/20100423/18211.html][Linux内核崩溃转储机制]]
+[[http://www.xxlinux.com/linux/article/development/kernel/20100423/18211.html][Linux内核崩溃转储机制]]yy
 
 [[http://www.cnblogs.com/wwang/archive/2010/11/19/1881304.html][Ubuntu的内核转储工具]]
 
@@ -108,4 +109,4 @@ make-kpkg -initrd --initrd --append-to-version=dellr710 kernel_image kernel-head
 
       读缓存是指，操作系统为已读取的文件数据，在内存较空闲的情况下留在内存空间中（这个内存空间被称之为“内存池”），当下次软件或用户再次读取同一文件时就不必重新从磁盘上读取，从而提高速度。
 
-　　写缓存实际上就是将要写入磁盘的数据先保存于系统为写缓存分配的内存空间中，当保存到内存池中的数据达到一个程度时，便将数据保存到硬盘中。这样可以减少实际的磁盘操作，有效的保护磁盘免于重复的读写操作而导致的损坏，也能减少写入所需的时间。（这里的磁盘缓存不是最上面的磁盘缓存）
+      　　写缓存实际上就是将要写入磁盘的数据先保存于系统为写缓存分配的内存空间中，当保存到内存池中的数据达到一个程度时，便将数据保存到硬盘中。这样可以减少实际的磁盘操作，有效的保护磁盘免于重复的读写操作而导致的损坏，也能减少写入所需的时间。（这里的磁盘缓存不是最上面的磁盘缓存）
