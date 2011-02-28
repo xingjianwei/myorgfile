@@ -1,0 +1,51 @@
+﻿* 概述
+** 硬件描述
+  主机：Dell R710
+  Marvell卡：Mavell SAS HBA （SE9480）
+  LSI卡：LSI SAS HBA (9200-8e)
+  Maxim开发板：MAXIM-IC 720181 EvBd 072 开发板
+  硬盘：Seagate 1000GB。型号ST31000340NS。SATA磁盘。
+** 软件描述
+  系统：Linux Ubuntu 10.10 (2.6.32-27-generic-pae)
+  Marvell驱动：mv94xx-linux-nonraid-4.0.0.1505N.tgz包编译后的驱动
+  LSI驱动：LSI内核模块mpt2sas
+  读写工具：dd
+** 测试描述
+  按类别执行写、读、单碟读写、双碟读写四项测试；
+  每项重复测试20次；
+  dd参数为count=10k bs=1024k，因此单次测试数据为10GB；
+  写入时源数据来自/dev/zero，读取时目标位/dev/null；
+  读写单碟时源数据来自文件，写往同一磁盘；
+  读写双碟时源数据来自文件，写往另一磁盘。
+**其他：
+  数据为SATA测试数据，以前SAS盘已归还，当前这边没有SAS磁盘。连通性测试时候有部分SAS测试，主要是为了硬件连通性，当时在Marvell做Raid情况下得到的性能数据，大概范围在200MB/s~235MB/s之间。条理不是很清晰，本文档忽略这些数据。
+
+* Marvell测试。如 marvell.bmp 图所示，为硬件连接方式。测试结果如下：
+** 写。从设备 /dev/zero 读取然后写入磁盘
+    SATA 103.00MB/s ~ 106.00MB/s ( average: 104.35 MB/s )
+** 读。从磁盘读，写入到 /dev/null
+    SATA 105.00MB/s ~ 106.00MB/s ( average: 105.95 MB/s )
+** 读写单一磁盘。从某磁盘读，并写入同一磁盘
+    SATA 36.70MB/s ~ 42.90MB/s   ( average: 40.36 MB/s )
+** 读写双磁盘。从某磁盘读，写入另一磁盘
+    SATA 103.00MB/s ~ 105.00MB/s ( average: 104.70 MB/s )
+
+* LSI测试。如 lsi.bmp 图所示，为硬件连接方式。测试结果如下：
+** 写。从设备 /dev/zero 读取然后写入磁盘
+    SATA 108.00MB/s ~ 111.00MB/s ( average: 109.65 MB/s )
+** 读。从磁盘读，写入到 /dev/null
+    SATA 109.00MB/s ~ 109.00MB/s ( average: 109.00 MB/s )
+** 读写单一磁盘。从某磁盘读，并写入同一磁盘
+    SATA 42.40MB/s ~ 46.90MB/s   ( average: 44.495 MB/s )
+** 读写双磁盘。从某磁盘读，写入另一磁盘
+    SATA 103.00MB/s ~ 107.00MB/s ( average: 105.00 MB/s )
+
+* LSI_Maxim测试。如 lsi_maxim.bmp 图所示，为硬件连接方式。测试结果如下：
+** 写。从设备 /dev/zero 读取然后写入磁盘
+    SATA 108.00MB/s ~ 111.00MB/s ( average: 109.55 MB/s )
+** 读。从磁盘读，写入到 /dev/null
+    SATA 109.00MB/s ~ 109.00MB/s ( average: 109.00 MB/s )
+** 读写单一磁盘。从某磁盘读，并写入同一磁盘
+    SATA 42.20MB/s ~ 47.30MB/s   ( average: 44.11 MB/s )
+** 读写双磁盘。从某磁盘读，写入另一磁盘
+    SATA 103.00MB/s ~ 107.00MB/s ( average: 104.85 MB/s )
