@@ -1,0 +1,2340 @@
+% Created 2011-03-09 周三 15:05
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+
+\title{mypublic}
+\author{xingjianwei}
+\date{09 三月 2011}
+
+\begin{document}
+
+\maketitle
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+\vspace*{1cm}
+\section{学习}
+\label{sec-1}
+
+\subsection{版本管理工具}
+\label{sec-1.1}
+
+\subsubsection{git}
+\label{sec-1.1.1}
+
+\href{http://git-scm.com/}{git website}
+git基础知识：\href{http://www.ibm.com/developerworks/cn/linux/l-git/}{使用 Git 管理源代码}  \href{http://www.opensourceforce.org/news/kaiyuanxinwen/20100423/117435.html}{Git和Github初次使用}
+my github:
+创建本地新项目工作树
+定义远程服务器别名origin
+本地和远程合并，本地默认分支为master
+
+\begin{itemize}
+
+\item git中文文件名、目录名乱码应该怎么解决\\
+\label{sec-1.1.1.1}
+
+git config core.quotepath false
+core.quotepath设为false的话，就不会对0x80以上的字符进行quote。中文显示正常
+
+
+\item git utf-8\\
+\label{sec-1.1.1.2}
+
+\href{http://code.google.com/p/utf8-git-on-windows/downloads/list}{http://code.google.com/p/utf8-git-on-windows/downloads/list}
+
+\end{itemize} % ends low level
+\subsection{测试管理工具}
+\label{sec-1.2}
+
+\subsubsection{testlink}
+\label{sec-1.2.1}
+
+    \href{http://192.168.100.5/tests}{http://192.168.100.5/tests}
+
+
+\subsection{Linux SG}
+\label{sec-1.3}
+
+osslab: \href{http://www.osslab.org.tw}{http://www.osslab.org.tw}
+\href{http://hi.baidu.com/widebright/blog/item/e1278501f75ff3dd267fb57f.html}{使用SG\_IO发送SCSI 指令测试底层驱动的scatter-gather 功能}
+y
+\href{http://blog.csdn.net/force_eagle/archive/2010/04/20/5507606.aspx}{在内核模块中通过系统调用ioctl获取ATA/SCSI硬盘序列号}
+
+\href{http://hi.baidu.com/suping/blog/item/db3d9513ad372e886538db1a.html}{Linux服务器监控之存储网络设备监测}
+
+\href{http://search.luky.org/ML/linux-kernel.2005/msg29654.html}{SAS domain layout for Linux sysfs}
+
+
+\subsection{Linux内核调试}
+\label{sec-1.4}
+
+
+\href{http://www.shangshuwu.cn/index.php/Linux%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95}{Linux内核调试方法}
+
+\href{http://www.cublog.cn/u1/56284/showart_2303524.html}{使用 Crash 工具分析 Linux dump 文件}
+
+\href{http://www.xxlinux.com/linux/article/development/kernel/20100423/18211.html}{Linux内核崩溃转储机制}yy
+
+\href{http://www.cnblogs.com/wwang/archive/2010/11/19/1881304.html}{Ubuntu的内核转储工具}
+
+\href{http://www.cnblogs.com/wwang/archive/2010/11/14/1876735.html}{Linux内核的Oops}
+
+\subsubsection{ubuntu 10.04server}
+\label{sec-1.4.1}
+
+update-grub
+
+\begin{itemize}
+
+\item sourcelist\\
+\label{sec-1.4.1.1}
+
+deb \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid main restricted universe multiverse
+deb \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-security main restricted universe multiverse
+deb \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-updates main restricted universe multiverse
+deb \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-proposed main restricted universe multiverse
+deb \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-backports main restricted universe multiverse
+deb-src \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid main restricted universe multiverse
+deb-src \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-security main restricted universe multiverse
+deb-src \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-updates main restricted universe multiverse
+deb-src \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-proposed main restricted universe multiverse
+deb-src \href{http://archive.ubuntu.com/ubuntu/}{http://archive.ubuntu.com/ubuntu/} lucid-backports main restricted universe multiverse**  source.list
+
+
+\item kdump install\\
+\label{sec-1.4.1.2}
+
+apt-get update
+apt-get dist-upgrade
+
+apt-get  install  build-essential
+apt-get install linux-crashdump
+service kdump start
+echo c > /proc/sysrq-trigger
+kernel oops and reboot\ldots{}
+
+cp /prov/vmcore  .
+wget \href{http://ddebs.ubuntu.com/pool/main/l/linux/}{http://ddebs.ubuntu.com/pool/main/l/linux/}
+dpkg -i *.ddeb
+
+
+\item kernel source compile\\
+\label{sec-1.4.1.3}
+
+\href{http://blog.csdn.net/jsufcz/archive/2009/09/23/4582712.aspx}{ubuntu下编译内核}
+apt-get install linux-source
+apt-get install build-essential kernel-package   libncurses5-dev
+make menuconfig
+make-kpkg clean
+
+make-kpkg -initrd --initrd --append-to-version=dellr710 kernel$_{\mathrm{image}}$ kernel-headers
+
+\end{itemize} % ends low level
+\subsection{scsi相关知识}
+\label{sec-1.5}
+
+
+   \href{http://blog.csdn.net/fudan_abc/archive/2007/12/10/1927945.aspx}{Linux那些事儿之我是SCSI硬盘}
+
+\subsubsection{disk DPO \& FUA}
+\label{sec-1.5.1}
+
+磁盘上必须有缓存，用来接收指令和数据，还被用来进行预读。磁盘缓存时刻处于打开状态。有很多文档资料上提到某些情况下可以“禁用”磁盘缓存，这是容易造成误解的说法。缓存在磁盘上表现为一块电路板上的RAM芯片，其容量大小是固定的，目前有2MB,8MB, 16MB, 32MB等容量规格。所谓“禁用”磁盘缓存值得其实是write through模式。即磁盘收到写指令和数据后，必须先将其写入盘片，然后才向控制器返回成功信号，这样就相当于“禁用”了缓存。但是实际上，指令和数据首先到达的一定是缓存。
+
+     SCSI指令中有两个参数可以控制对磁盘缓存的使用。
+
+     .DPO(Disable Page Out): 这个参数的作用是禁止缓存中的数据页（缓存中的数据以页为单位存在）被换出。不管读还是写，被置了这个参数位的数据在缓存空间不够的时候不能覆盖缓存中的其他数据，也就是不能将其他数据换出。但如果命中，即读写的数据已经在缓存中，则从或往缓存中读写。
+
+     .FUA(Force Unit  Access):这个参数的作用是强制盘片访问。对于写操作，磁盘必须将收到的数据写入盘片后才返回成功信号，也就是进行write through。对于度操作，磁盘收到指令后，直接去盘片上读取数据，而不搜索缓存。
+
+     所以，当某个SCSI指令的DPO和FUA两个参数的值都被置为1时，便相当于完全不使用缓存的提速功能了，但是指令和数据依然会存放到缓存中，只一点需要分清和理解。
+
+下面是百度上关于硬盘缓存区的解释：
+
+硬盘的缓冲区
+　　硬盘的缓冲区是硬盘与外部总线交换数据的场所。硬盘的读数据的过程是将磁信号转化为电信号后，通过缓冲区一次次地填充与清空，再填充，再清空，一步步按照PCI总线的周期送出，可见，缓冲区的作用是相当重要的。它的作用也是提高性能，但是它与缓存的不同之处在于：一、它是容量固定的硬件，而不像缓存是可以由操作系统在内存中动态分配的。二、它对性能的影响大大超过磁盘缓存对性能的影响，因为如果没有缓 冲区，就会要求每传一个字（通常是4字节）就需要读一次磁盘或写一次磁盘。
+
+什么是磁盘缓存
+　　磁盘缓存分为读缓存和写缓存。
+
+      读缓存是指，操作系统为已读取的文件数据，在内存较空闲的情况下留在内存空间中（这个内存空间被称之为“内存池”），当下次软件或用户再次读取同一文件时就不必重新从磁盘上读取，从而提高速度。
+
+      　　写缓存实际上就是将要写入磁盘的数据先保存于系统为写缓存分配的内存空间中，当保存到内存池中的数据达到一个程度时，便将数据保存到硬盘中。这样可以减少实际的磁盘操作，有效的保护磁盘免于重复的读写操作而导致的损坏，也能减少写入所需的时间。（这里的磁盘缓存不是最上面的磁盘缓存）
+
+\subsection{Emacs}
+\label{sec-1.6}
+
+\subsubsection{mew}
+\label{sec-1.6.1}
+
+\begin{itemize}
+
+\item 配置参数介绍\\
+\label{sec-1.6.1.1}
+
+\href{https://code.google.com/p/vvoodys/source/browse/trunk/howto/mew-howto-cn.txt?spec=svn24&r=24}{https://code.google.com/p/vvoodys/source/browse/trunk/howto/mew-howto-cn.txt?spec=svn24\&r=24}
+
+\item 配置指南\\
+\label{sec-1.6.1.2}
+
+\href{http://zerodoo.appspot.com/emacs.mew.1.0001.html}{Mew 配置使用指南}
+1 Mew安装
+
+在 Ubuntu 下，只要 sudo apt-get install mew 即可。
+
+2 Mew配置
+
+2.1 常规内容
+
+(autoload `mew ``mew'' nil t)
+(autoload `mew-send ``mew'' nil t)
+
+;; Optional setup (Read Mail menu for Emacs 21):
+(if (boundp `read-mail-command)
+    (setq read-mail-command `mew))
+
+;; Optional setup (e.g. C-xm for sending a message):
+(autoload `mew-user-agent-compose ``mew'' nil t)
+(if (boundp `mail-user-agent)
+    (setq mail-user-agent `mew-user-agent))
+(if (fboundp `define-mail-user-agent)
+    (define-mail-user-agent
+      `mew-user-agent
+      `mew-user-agent-compose
+      `mew-draft-send-message
+      `mew-draft-kill
+      `mew-send-hook))
+
+;; mew-pop-size设置成0时，pop邮件大小没有限制
+(setq mew-pop-size 0)
+;; 不删除服务器上的邮件
+(setq mew-pop-delete nil)
+2.2 设置帐号
+
+2.2.1 设置单帐号的方式
+
+(setq mew-name ``Corel Chen'') ;; (user-full-name)
+(setq mew-user ``corel'') ;; (user-login-name)
+(setq mew-mail-domain ``a8.com'')
+(setq mew-smtp-user ``corel'')
+(setq mew-smtp-server ``smtp.a8.com'')  ;; if not localhost
+(setq mew-pop-user ``corel'')  ;; (user-login-name)
+(setq mew-pop-server ``pop.a8.com'')    ;; if not localhost
+(setq mew-pop-auth `pass)
+(setq mew-smtp-auth-list `(``PLAIN'' ``LOGIN'' ``CRAM-MD5''))
+2.2.2 设置多帐号的方式
+
+(setq mew-config-alist
+      `((``default''
+     (``name''         .  ``Corel Chen'')
+     (``user''         .  ``corel'')
+     (``smtp-server''  .  ``smtp.a8.com'')
+     (``smtp-port''    .  ``25'')
+     (``pop-server''   .  ``pop.a8.com'')
+     (``pop-port''     .  ``110'')
+     (``smtp-user''    .  ``corel'')
+     (``pop-user''     .  ``corel'')
+     (``mail-domain''  .  ``a8.com'')
+     (``mailbox-type'' .  pop)
+     (``pop-auth''     .  pass)
+     (``smtp-auth-list'' . (``PLAIN'' ``LOGIN'' ``CRAM-MD5''))
+     )
+     (``gmail''
+        (``name''         . ``corel'')
+        (``user''         . ``corel.china'')
+        (``mail-domain''  . ``gmail.com'')
+        (``proto''        . ``+'')
+        (``pop-ssl''      . t)
+        (``pop-ssl-port'' . ``995'')
+;       (``prog-ssl''     . ``/usr/sbin/stunnel'')
+        (``pop-auth''     . pass)
+        (``pop-user''     . ``corel.china@gmail.com'')
+        (``pop-server''   . ``pop.gmail.com'')
+        (``smtp-ssl''     . t)
+        (``smtp-ssl-port''. ``465'')
+        (``smtp-auth-list'' . (``PLAIN'' ``LOGIN'' ``CRAM-MD5''))
+        (``smtp-user''    . ``corel.china@gmail.com'')
+        (``smtp-server''  . ``smtp.gmail.com'')
+        )
+))
+
+这里只设置了一个帐号，如果要设置多个帐号只要彷照A8帐号的设置方法在 mew-config-alist 内再增加一个帐号设置信息就可以了。 具体都有哪些参数请参见 Mew官方文档 。
+
+如果只设置了一个账户的话，名称要用“default”，否则在 M-x mew 时会报“连 接被拒绝”的错误。如果设置了多个账户，也要有一个名称为“default”的，切换 账户使用 C 按键。（参考\href{http://www.mew.org/en/info/beta/mew_8.html}{http://www.mew.org/en/info/beta/mew\_8.html} ）
+
+gmail帐号的那部分还没有经过测试。
+
+2.2.3 帐号密码管理方式
+
+有两种方式：
+
+保存密码到内存，而不是写到文件
+(setq mew-use-cached-passwd t)
+Mew运行时保存密码到内存，退出时加密保存到文件，有主密码
+(setq mew-use-master-passwd t)
+如果忘记主密码，可以使用 C-c C-m 重设主密码。
+
+两种方式的详细区别参见 \href{http://www.mew.org/en/info/beta/mew_1.html#password}{http://www.mew.org/en/info/beta/mew\_1.html\#password}
+
+2.3 编码设置
+
+缺省情况下，mew发送的邮件都是用的 iso-2022-jp-2 编码发送的，如果用 mew接收邮件显示是正常的，但其他客户端接收则可能是乱码了。在已发送邮件 上按 C-c TAB 会显示邮件的详情，可以看到：
+
+Content-Type: Text/Plain; charset=iso-2022-jp-2
+Content-Transfer-Encoding: 7bit
+要改成用 utf8 发送邮件，查了很多资料并看了下mew的源码，发现要作如下设 置，才会用 utf8 来发送邮件：
+
+(setq mew-charset-m17n ``utf-8'')
+(setq mew-internal-utf-8p t)
+这时再发送邮件时，会看到：
+
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: base64
+2.4 biff设置
+
+(setq mew-use-biff t)  ;; 设置使用Biff检查邮箱是否有新邮件，默认为5分
+钟。如果有新邮件，则在emacs的状态栏显示Mail(n)的提示—n表示新邮件数目。
+(setq mew-use-biff-bell t)  ;; 设置嘟嘟声通知有新邮件
+(setq mew-biff-interval 10) ;; 设置自动检查新邮件的时间间隔，单位：分钟
+特别提示： 要使用biff实现通知，需要先启动mew，然后就可以干其他的活了。如 果看到状态栏上有Mail(n)的提示，则切换到mew的buffer，这时是看不到新邮件 的（也就是说新邮件并没有收到本地），需要按 i 按键收取新邮件。
+
+3 Mew的使用
+
+3.1 快捷键
+
+具体可以看Mew的info，一般的使用比较简单，在emacs中用 mew 命令接收邮件 之后，Mew进入 summary-mode ，这时候常用命令如下：
+
+key     功能描述
+w       撰写新邮件
+a       回复邮件，不带引用
+A       回复邮件，带引用
+f       转发邮件
+E       重新编辑邮件
+r       重新发送邮件
+SPC     阅读邮件
+y       保存邮件（可以保存信件全文、信件正文、附件）
+C-c C-l 转换当前邮件的编码格式
+C-c C-a 加入地址薄
+C-u C-c C-a     比 C-c C-a 多加入昵称和名字
+i       收信
+g       跳转邮箱
+o       对邮件进行分类
+M-o     对所有邮件按照设定的规则进行分类
+d       把邮件标记为删除
+
+\item mew 在w32下适配emacs的问题\\
+\label{sec-2.1}
+
+在emacs中使用mew接收mime的邮件，打开附件时，
+
+mew-win32.el会指定打开程序默认程序fiber.exe
+
+网上没有找到这个程序。
+
+mew-win32.el
+
+(defvar mew-w32-exec           ``fiber.exe'')
+
+改为
+
+(defvar mew-w32-exec           ``explorer.exe'')
+
+然后把mew-mine.el:
+
+函数mew-summary-execute-program
+
+修改
+
+(require `dired) ；；增加引用文件
+;;; external
+(defun mew-summary-execute-program (program ct ctl cache begin end params fname options async)
+  (if (not (mew-which-exec program))
+      (message ``\%s does not exist'' program)
+    (let ((file (mew-make-temp-name fname))
+   wcs)
+      (save-excursion
+ (set-buffer cache)
+ ;; NEVER use call-process-region for privacy reasons
+ (cond
+  ((not (mew-ct-linebasep ct))
+   (setq wcs mew-cs-binary))
+  ((not (mew-ct-textp ct))
+   (setq wcs mew-cs-text-for-write))
+  (t
+   (cond
+    ((or (string= mew-ct-htm ct) (string= mew-ct-xml ct))
+     (setq wcs (mew-text/html-detect-cs begin end))
+     (unless (mew-coding-system-p wcs)
+       (setq wcs (mew-charset-to-cs
+    (mew-syntax-get-param ctl ``charset'')))))
+    (t
+     (setq wcs (mew-charset-to-cs
+         (mew-syntax-get-param ctl ``charset'')))))
+   (unless (mew-coding-system-p wcs)
+     (setq wcs (if mew-decode-broken
+     (mew-charset-to-cs
+      (mew-charset-guess-region
+       begin end))
+   mew-cs-text-for-write)))))
+ (mew-frwlet mew-cs-dummy wcs
+   (write-region begin end file nil `no-msg))
+ (if async
+     (mew-mime-start-process program options (dired-replace-in-string ``/'' ``\\'' file) );yxf
+   (mew-mime-call-process program options (dired-replace-in-string ``/'' ``\\'' file) ))))));把路径中/改为''\''，以便explorer识别。
+\end{itemize} % ends low level
+\subsubsection{latex}
+\label{sec-2.1}
+
+
+\subsubsection{常用命令整理}
+\label{sec-2.2}
+
+时间：2007-01-19 11:14:33  来源：chinaunix  作者：
+
+                    
+
+
+
+[置换]
+\hrule
+C-t                    字符置换                           
+M-t                    字置换                             
+C-x C-t                行置换                             
+C-M-t                  表达式置换                         
+
+
+
+
+
+[大小写]
+\hrule
+M-u                    将一个字设置为大写                     
+M-l                    将一个字设置为小写                     
+M-c                    将一个字首字母设置为大写                 
+C-x C-u                将一个区域设置为大写                   
+C-x C-l                将一个区域设置为小写                   
+
+
+
+[补全]
+\hrule
+TAB                    最大程度地补全命令                     
+SPC                    补全命令中的一个字                     
+RET                    完成并执行一个命令                     
+?                      列出命令所有可能的后续部分               
+M-p                    列出在当前命令之前输入的命令             
+M-n                    列出在当前命令之后输入的命令             
+M-r                    用规则表达式在命令历史记录中向后搜寻         
+M-s                    用规则表达式在命令历史记录中向前搜寻         
+C-x ESC ESC            重复执行上一条命令                     
+
+
+
+
+[Shells]
+\hrule
+M-!                    执行一个shell命令                     
+M-|                    在一个区域上执行sheel命令               
+C-u M-|                通过shell命令过滤区域                   
+M-x shell              在窗口中启动一个shell                   
+
+
+
+[缩进]
+\hrule
+C-x TAB                indent-rigidly
+
+
+
+[规则表达式]
+\hrule
+.                      除换行符外的所有单个字符                 
+ *                      零个或多个重复                       
+\begin{itemize}
+\item 一个以上的重复
+\end{itemize}
+?                      零个或一个重复                      
+
+\begin{center}
+\begin{tabular}{l}
+ 选择（or）  \\
+\end{tabular}
+\end{center}
+
+
+(…)                    分组                             
+n                      与第n个组相同的文本                   
+b                      At work break                         
+B                      Not at work break
+
+
+
+[编程]
+-----------------------------                  
+C-M-a                  到函数首部                         
+C-M-e                  到函数尾部
+
+C-M-h                  标记一个函数 
+
+
+
+[GDB调试]
+\hrule
+.启动gdb
+ gdb bayonne
+ gdb --args bayonne -vvv script.scr
+
+.利用帮助
+ help 命令类别名
+ help 命令名
+
+.调试指定程序
+ file  /home/cnscn/a.out
+
+.运行程序
+ r[un]
+ r[un] -vvv script.scr
+
+.设置断点
+ 按照函数名设置断点
+ b[reak] main
+ b[reak] `namespace::Class::func()'
+
+.按照文件名和行数设置断点
+ b[reak] methods.cpp:523
+
+.检查状态
+ 检查堆栈
+ b[ack]t[race]
+ up
+ down
+
+ 检查当前函数的源代码
+ l[ist]
+
+ 检查/改变变量值
+ p[rint] var
+ p[rint] ptr->mem
+ p[rint] *ptr
+ p[rint] (`namespace::Class') *this
+ p[rint] ((`namespace::Class') *this)->a.b.c
+
+ p[rint] var=value
+
+ 检查类
+ ptype ptr
+
+ set print object on
+ whatis ptr
+
+ 检查并启用/禁用断点
+ set breakpoint pending on
+ info b[reakpoints]
+ enable [N]
+ disable [N]
+
+ 检查并切换线程
+ info th[reads]
+ thread N
+
+ 检查寄存器
+ info reg
+ info reg esp
+
+ 检查内存
+ x/10s *0xaabbccdd
+ x/5x var
+
+.继续运行
+ 运行到某一行即停止，当前函数返回时也停止
+ advance source.cpp:123
+
+ 运行到当前函数返回为止
+ fin[ish]
+
+ 继续运行直到程序结束或下一个断点
+ c[ontinue]
+
+
+.信号
+ 检查当前的信号处理策略
+ info signals
+
+ 改变信号处理策略
+ handle SIGINT pass
+ handle SIGINT nostop
+
+
+.与Emacs配合使用
+ 建议使用Emacs-23。设定别名
+  alias emacs='emacs --enable-font-backend -fn ``Dejavu Sans Mono-12'''
+
+ 修改\~{}/.emacs，把下面这一行加入
+ (defvar gdb-many-windows t)
+
+ 在Emacs里启动gdb
+ M-x gdb
+
+ 开启多窗口模式
+ M-x gdb-many-windows
+
+ 进入gud-tooltip-mode
+ M-x gud-tooltip-mode
+
+                       
+
+
+
+[自定义设置]
+\hrule
+.设定预设的输入法，将下面这一行加入到 \~{}/.emacs 档案中：
+ (custom-set-variables `(default-input-method ``chinese-array30''))
+ 在启动 Emacs 后，您就可以直接以 C-\textbackslash{} 指令在英文输入和行列输入法之间切换了
+ 
+
+
+[FAQ]
+\hrule
+ 
+.但是有时候用行列打不出来，需要切换成注音输入法。
+ 有两种方式可以达成这个目的：
+
+  a. C-x RET C-\textbackslash{} chinese-zozy RET
+  b. C-u C-\textbackslash{} chinese-zozy RET
+
+  作者建议您使用第二种方式，因为它同时也是作为两种输入法间切换的指令。
+  接下来您只要键入 C-u C-\textbackslash{} RET 就可以在行列和注音这两者间作切换了。
+ （注意：中英输入法间的切换还是以 C-\textbackslash{} 指令为之。）
+
+  以后我们在不同中文输入法间作切换将可以 C-u C-u C-\textbackslash{} 达成，
+  原本作者是建议以 M-\textbackslash{} 来补足这个想法，
+  但是 M-\textbackslash{} 很不幸已经作为 delete-horizontal-space 指令了。
+  不然 C-\textbackslash{} 搭配 M-\textbackslash{} 不是很漂亮吗？
+
+  这样子您应该可以理解如何使用中文输入环境了吧！
+
+
+
+. narrow 功能.用于隐藏文本,在进行string replace时十分有用选中要保留的文本, 然后C-x n n 或M-x narrow-to-region 要展开文本: C-x n w 或 M-x widen
+
+. emacs的自动排版用M-q
+
+. window下面用emacs远程编辑文件,可以用 ftp方式:
+
+    C-x C-f RET /\href{ftp:user@host:/path/test.txt}{ftp:user@host:/path/test.txt}
+    ssh方式: 下载plink.exe,将其路径加入PATH变量
+    C-x C-f RET /\href{ftp:user@host:/path/test.txt}{ftp:user@host:/path/test.txt}
+
+. emacs下的su 可以用C-x C-f安下列方式实现su文件编辑
+    /su::/etc/foobar.conf
+
+. 用空格代替tab (setq-default indent-tabs-mode nil)
+    M-x untabify
+    
+. 指定文件的编码方式:C-x RET f
+
+
+. 捕捉程序的输出可以用
+    C-u M-! ls
+
+
+. 如何在dos和unix文件类型之间转化
+    C-x RET f unix   转化成Unix文件格式
+    C-x RET f dos    转化成dos文件格式
+
+
+. hexl   将二进制文件转化成emacs十六进制模式可以用的格式
+
+
+.键绑定
+
+\begin{enumerate}
+\item 记住在所有要绑定到快捷键的函数上面加上(interactive)关键字,否则,会发生(wrong-type-argument commandp my-command)的错误
+    对于要绑定到鼠标的函数,要在函数声明中指定参数(event),在修饰段,加入(interactive ``e''),然后才能绑定
+\item 对于要传递参数的函数,可以用lambda匿名函数来实现
+
+    (global-set-key [(prior)]
+        `(lambda () ``Previous'' (interactive) (scroll-down 1)))
+
+    或则
+
+    (global-set-key [(prior)]
+        (function (lambda () ``Previous'' (interactive) (scroll-down 1))))
+
+    记住对于 global-set-key函数需要的第二个参数是一个symble或者是list
+\item (read-event)可以得到emacs的键码的内部表示
+\item 如果你觉得每次为了关闭一个buffer都要按C-x k很麻烦,那么你可以这样绑定:
+
+    (global-set-key (kbd ``<M-f4>'') (lambda () (interactive) (kill-buffer (current-buffer)))
+\end{enumerate}
+\subsubsection{常用配置}
+\label{sec-2.3}
+
+\begin{itemize}
+
+\item 1\\
+\label{sec-2.3.1}
+
+七楼的阳光
+－－－宁静致远，超然世外。
+emacs23的使用
+
+
+;============================ 语言环境字符集设置 \texttt{===============================}
+;;这一部份主要用在linux 环境下，windows下没什么作用
+;; (set-language-environment `Chinese-GB)
+;; (set-keyboard-coding-system `utf-8)
+;; (set-clipboard-coding-system `utf-8)
+;; (set-terminal-coding-system `utf-8)
+;; (set-buffer-file-coding-system `utf-8)
+;; (set-default-coding-systems `utf-8)
+;; (set-selection-coding-system `utf-8)
+;; (modify-coding-system-alist `process ``*'' `utf-8)
+;; (setq default-process-coding-system `(utf-8 . utf-8))
+;; (setq-default pathname-coding-system `utf-8)
+;; (set-file-name-coding-system `utf-8)
+;; (setq ansi-color-for-comint-mode t) ;;处理shell-mode乱码,好像没作用
+;=========================== 语言环境字符集设置结束 \texttt{=============================}
+
+;============================ MS Windows环境下字体设置 \texttt{=========================}
+(setq default-frame-alist 
+(append 
+  `((font . ``fontset-chinese'')) default-frame-alist))
+
+
+(create-fontset-from-fontset-spec
+  ``-outline-Courier New-normal-r-normal-normal-13-97-96-96-c-*-fontset-chinese'')
+(set-fontset-font
+ ``fontset-default'' nil
+ ``-outline-新宋体-normal-r-normal-normal-14-*-96-96-c-*-iso10646-1'' nil `prepend)
+(set-fontset-font
+ ``fontset-chinese'' `kana
+ ``-outline-新宋体-normal-r-normal-normal-14-*-96-96-c-*-iso10646-1'' nil `prepend)
+(set-fontset-font
+ ``fontset-chinese'' `han
+ ``-outline-新宋体-normal-r-normal-normal-14-*-96-96-c-*-iso10646-1'' nil `prepend)
+(set-fontset-font
+ ``fontset-chinese'' `cjk-misc
+ ``-outline-新宋体-normal-r-normal-normal-14-*-96-96-c-*-iso10646-1'' nil `prepend)
+(set-fontset-font
+ ``fontset-chinese'' `symbol
+ ``-outline-新宋体-normal-r-normal-normal-14-*-96-96-c-*-iso10646-1'' nil `prepend)
+(set-default-font ``fontset-chinese'')
+
+;===========================MS Windows环境下字体设置结束 \texttt{=======================}
+
+ 
+
+;============================ Linux环境下字体设置 \texttt{===============================}
+
+;; (create-fontset-from-fontset-spec 
+;; ``-*-courier-medium-r-normal-*-14-*-*-*-*-*-fontset-courier'') 
+;; (set-default-font ``fontset-courier'') 
+;; (setq default-frame-alist 
+;; (append 
+;; `((font . ``fontset-courier'')) default-frame-alist))
+
+;; (set-fontset-font 
+;; ``fontset-default'' nil 
+;; ``-*-simsun-*-*-*-*-14-*-*-*-*-*-gb2312.1980-*'' nil `prepend) 
+;; (set-fontset-font 
+;; ``fontset-courier'' `kana 
+;; ``-*-simsun-*-*-*-*-14-*-*-*-*-*-gbk-0'' nil `prepend) 
+;; (set-fontset-font 
+;; ``fontset-courier'' `han 
+;; ``-*-simsun-*-*-*-*-14-*-*-*-*-*-gbk-0'' nil `prepend) 
+;; (set-fontset-font 
+;; ``fontset-courier'' `cjk-misc 
+;; ``-*-simsun-*-*-*-*-14-*-*-*-*-*-gbk-0'' nil `prepend)
+
+;============================ Linux环境下字体设置结束 \texttt{============================}
+
+
+;;;;;;;;;;;;;;;;;;;;语言环境字体设置结束;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;解决中英文混排不能正确fill的问题,好像没什么用
+;; (put-charset-property `chinese-cns11643-5 `nospace-between-words t)
+;; (put-charset-property `chinese-cns11643-6 `nospace-between-words t)
+;; (put-charset-property `chinese-cns11643-7 `nospace-between-words t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;  设置窗口界面 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(set-foreground-color ``grey'')
+(set-background-color ``black'')
+(set-cursor-color ``gold1'')
+(set-mouse-color ``gold1'')
+
+(set-scroll-bar-mode nil)
+;;取消滚动栏
+
+;;(customize-set-variable `scroll-bar-mode `right))
+;;设置滚动栏在窗口右侧，而默认是在左侧
+
+(tool-bar-mode nil)
+;;取消工具栏
+
+(setq default-frame-alist
+             `((vertical-scroll-bars)  
+               (top . 25)
+               (left . 45)                               
+               (width . 110)
+               (height . 40)           
+               (background-color . ``black'')
+               (foreground-color . ``grey'')
+               (cursor-color     . ``gold1'')
+               (mouse-color      . ``gold1'')
+               (tool-bar-lines . 0)
+               (menu-bar-lines . 1)
+               (right-fringe)
+               (left-fringe)))
+
+               
+;; 设置另外一些颜色：语法高亮显示的背景和主题，区域选择的背景和主题，二次选择的背景和选择
+(set-face-foreground `highlight ``white'')
+(set-face-background `highlight ``blue'')
+(set-face-foreground `region ``cyan'')
+(set-face-background `region ``blue'')
+(set-face-foreground `secondary-selection ``skyblue'')
+(set-face-background `secondary-selection ``darkblue'')
+
+ 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;  设置界面结束  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;   显示时间设置   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(display-time-mode 1);;启用时间显示设置，在minibuffer上面的那个杠上
+(setq display-time-24hr-format t);;时间使用24小时制
+(setq display-time-day-and-date t);;时间显示包括日期和具体时间
+(setq display-time-use-mail-icon t);;时间栏旁边启用邮件设置
+(setq display-time-interval 10);;时间的变化频率，单位多少来着？
+ 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;  显示时间设置结束  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;定制操作习惯;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;设置打开文件的缺省路径
+(setq default-directory ``/'')
+
+;;ido的配置,这个可以使你在用C-x C-f打开文件的时候在后面有提示;
+;;这里是直接打开了ido的支持，在emacs23中这个是自带的.
+(ido-mode t)
+
+(setq visible-bell t)
+;;关闭烦人的出错时的提示声
+(setq inhibit-startup-message t)
+;;关闭emacs启动时的画面
+
+(setq gnus-inhibit-startup-message t)
+;;关闭gnus启动时的画面
+
+(fset `yes-or-no-p `y-or-n-p)
+;; 改变 Emacs 固执的要你回答 yes 的行为。按 y 或空格键表示 yes，n 表示 no。
+
+(setq font-lock-maximum-decoration t)
+(setq font-lock-global-modes `(not shell-mode text-mode))
+(setq font-lock-verbose t)
+(setq font-lock-maximum-size `((t . 1048576) (vm-mode . 5250000)))
+;; 语法高亮。除 shell-mode 和 text-mode 之外的模式中使用语法高亮。
+
+(setq column-number-mode t) 
+(setq line-number-mode t)
+;;显示行列号
+
+(setq mouse-yank-at-point t)
+;;不要在鼠标点击的那个地方插入剪贴板内容。我不喜欢那样，经常把我的文档搞的一团糟。我觉得先用光标定位，然后鼠标中键点击要好的多。不管你的光标在文档的那个位置，或是在 minibuffer，鼠标中键一点击，X selection 的内容就被插入到那个位置。
+
+(setq kill-ring-max 200)
+;;设置粘贴缓冲条目数量.用一个很大的kill ring(最多的记录个数). 这样防止我不小心删掉重要的东西
+
+(setq-default auto-fill-function `do-auto-fill) 
+ ; Autofill in all modes;;
+(setq default-fill-column 120)
+;;把 fill-column 设为 60. 这样的文字更好读
+
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 8)
+(setq tab-stop-list ())
+;;不用 TAB 字符来indent, 这会引起很多奇怪的错误。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显示的。
+
+(setq sentence-end ``\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*'')
+(setq sentence-end-double-space nil)
+;;设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插入两个空格。
+
+(setq enable-recursive-minibuffers t)
+;;可以递归的使用 minibuffer
+
+(setq scroll-margin 3  scroll-conservatively 10000)
+;;防止页面滚动时跳动， scroll-margin 3 可以在靠近屏幕边沿3行时就开始滚动，可以很好的看到上下文。
+
+(setq default-major-mode `text-mode)
+(add-hook `text-mode-hook `turn-on-auto-fill) 
+;;设置缺省主模式是text，,并进入auto-fill次模式.而不是基本模式fundamental-mode
+
+(setq show-paren-mode t) ;;打开括号匹配显示模式
+(setq show-paren-style `parenthesis)
+;;括号匹配时可以高亮显示另外一边的括号，但光标不会烦人的跳到另一个括号处。
+
+(setq mouse-avoidance-mode `animate)
+;;光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线。
+
+(setq frame-title-format ``emacs@\%b'')
+;;在标题栏显示buffer的名字，而不是 emacs@wangyin.com 这样没用的提示。
+
+(setq uniquify-buffer-name-style `forward);;好像没起作用
+;; 当有两个文件名相同的缓冲时，使用前缀的目录名做 buffer 名字，不用原来的foobar<?> 形式。
+
+(setq auto-image-file-mode t)
+;;让 Emacs 可以直接打开和显示图片。
+
+;(auto-compression-mode 1)   
+;打开压缩文件时自动解压缩。
+
+(setq global-font-lock-mode t)
+;;进行语法加亮。
+
+(setq-default kill-whole-line t)
+;; 在行首 C-k 时，同时删除该行。
+
+(add-hook `comint-output-filter-functions
+      `comint-watch-for-password-prompt)
+;;当你在shell、telnet、w3m等模式下时，必然碰到过要输入密码的情况,此时加密显出你的密码
+
+;; (setq version-control t);;启用版本控制，即可以备份多次
+;; (setq kept-old-versions 2);;备份最原始的版本两次，及第一次编辑前的文档，和第二次编辑前的文档
+;; (setq kept-new-versions 1);;备份最新的版本1次，理解同上
+;; (setq delete-old-versions t);;删掉不属于以上3中版本的版本
+;; (setq backup-directory-alist `((``.'' . ``\~{}/backups'')));;设置备份文件的路径
+;; (setq backup-by-copying t);;备份设置方法，直接拷贝
+;; Emacs 中，改变文件时，默认都会产生备份文件(以 \~{} 结尾的文件)。可以完全去掉
+;; (并不可取)，也可以制定备份的方式。这里采用的是，把所有的文件备份都放在一
+;; 个固定的地方(``\~{}/backups'')。对于每个备份文件，保留最原始的两个版本和最新的
+;; 1个版本。并且备份的时候，备份文件是复本，而不是原件。
+
+(setq make-backup-files nil) 
+;; 设定不产生备份文件
+
+(setq auto-save-mode nil) 
+;;自动保存模式
+
+(setq-default make-backup-files nil)
+;; 不生成临时文件
+
+(put `scroll-left `disabled nil)     ;允许屏幕左移
+(put `scroll-right `disabled nil)    ;允许屏幕右移
+(put `set-goal-column `disabled nil)
+(put `narrow-to-region `disabled nil) 
+(put `upcase-region `disabled nil)
+(put `downcase-region `disabled nil)
+(put '\LaTeX{}-hide-environment `disabled nil)
+;;把这些缺省禁用的功能打开。
+
+;;允许emacs和外部其他程序的粘贴
+(setq x-select-enable-clipboard t)
+
+(setq mouse-yank-at-point t)
+;;使用鼠标中键可以粘贴
+
+(setq user-full-name ``王光平'')
+(setq user-mail-address ``getmails@163.com'')
+;;设置有用的个人信息,这在很多地方有用。
+
+(setq require-final-newline t)
+;; 自动的在文件末增加一新行
+
+(setq-default transient-mark-mode t)
+;;Non-nil if Transient-Mark mode is enabled.
+
+(setq track-eol t)
+;; 当光标在行尾上下移动的时候，始终保持在行尾。
+
+(setq Man-notify-method `pushy)
+;; 当浏览 man page 时，直接跳转到 man buffer。
+
+(setq next-line-add-newlines nil)
+;;Emacs 21 中已经是缺省设置。按 C-n 或向下键时不添加新行。
+  
+(global-set-key [home] `beginning-of-buffer)
+(global-set-key [end] `end-of-buffer)
+;;设置home键指向buffer开头，end键指向buffer结尾
+
+
+(global-set-key (kbd ``C-,'') `scroll-left)
+;; ``C-,''设为屏幕左移命令
+(global-set-key (kbd ``C-.'') `scroll-right)
+;; ``C-.''设为屏幕右移命令
+
+(global-set-key [f1] `manual-entry)
+(global-set-key [C-f1] `info )
+
+(global-set-key [f3] `repeat-complex-command)
+
+(global-set-key [f4] `other-window)
+;; 跳转到 Emacs 的另一个buffer窗口
+
+(defun du-onekey-compile ()
+  ``Save buffers and start compile''
+  (interactive)
+  (save-some-buffers t)
+  (switch-to-buffer-other-window ``*compilation*'')
+  (compile compile-command))
+  (global-set-key [C-f5] `compile)
+  (global-set-key [f5] `du-onekey-compile)
+;;  C-f5, 设置编译命令; f5, 保存所有文件然后编译当前窗口文件
+
+(global-set-key [f6] `gdb)             
+;;F6设置为在Emacs中调用gdb
+
+(global-set-key [C-f7] `previous-error)
+(global-set-key [f7] `next-error)
+
+(defun open-eshell-other-buffer ()
+  ``Open eshell in other buffer''
+  (interactive)
+  (split-window-vertically)
+  (eshell))
+(global-set-key [(f8)] `open-eshell-other-buffer)
+(global-set-key [C-f8] `eshell)
+;;目的是开一个shell的小buffer，用于更方便地测试程序(也就是运行程序了)，我经常会用到。
+;;f8就是另开一个buffer然后打开shell，C-f8则是在当前的buffer打开shell
+
+(setq speedbar-show-unknown-files t);;可以显示所有目录以及文件
+(setq dframe-update-speed nil);;不自动刷新，手动 g 刷新
+(setq speedbar-update-flag nil)
+(setq speedbar-use-images nil);;不使用 image 的方式
+(setq speedbar-verbosity-level 0)
+
+(global-set-key [f9] `speedbar)
+;;设置f9调用speedbar命令
+;;使用 n 和 p 可以上下移动，
+;; + 展开目录或文件进行浏览，- 收缩，RET 访问目录或文件，g 更新 speedbar。
+
+(setq dired-recursive-copies `top)
+(setq dired-recursive-deletes `top)
+;;让 dired 可以递归的拷贝和删除目录。
+(global-set-key [C-f9] `dired)
+;;设置[C-f9]为调用dired命令
+
+(global-set-key [f10] `undo)             
+;;设置F10为撤销
+
+(global-set-key [f11] `calendar) 
+;;设置F11快捷键指定Emacs 的日历系统
+
+(global-set-key [f12] `list-bookmarks)
+;;设置F12 快速察看日程安排
+
+(setq time-stamp-active t)
+(setq time-stamp-warn-inactive t)
+(setq time-stamp-format ``\%:y-\%02m-\%02d \%3a \%02H:\%02M:\%02S chunyu'')
+;; 设置时间戳，标识出最后一次保存文件的时间。
+
+(global-set-key (kbd ``M-g'') `goto-line)
+;;设置M-g为goto-line
+
+(global-set-key (kbd ``C-SPC'') `nil)
+;;取消control+space键设为mark
+
+(global-set-key (kbd ``M-<SPC>'') `set-mark-command)
+;;这样 我就不用按 C-@ 来 setmark 了, C-@ 很不好按。
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;定制操作习惯结束;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  设置日历 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;设置日历的一些颜色
+(setq calendar-load-hook
+`(lambda ()
+(set-face-foreground `diary-face ``skyblue'')
+(set-face-background `holiday-face ``slate blue'')
+(set-face-foreground `holiday-face ``white'')))
+
+;;设置我所在地方的经纬度，calendar里有个功能是日月食的预测，和你的经纬度相联系的。
+;; 让emacs能计算日出日落的时间，在 calendar 上用 S 即可看到
+(setq calendar-latitude +39.54)
+(setq calendar-longitude +116.28)
+(setq calendar-location-name ``北京'')
+
+;; 设置阴历显示，在 calendar 上用 pC 显示阴历
+(setq chinese-calendar-celestial-stem
+  [``甲'' ``乙'' ``丙'' ``丁'' ``戊'' ``己'' ``庚'' ``辛'' ``壬'' ``癸''])
+(setq chinese-calendar-terrestrial-branch
+  [``子'' ``丑'' ``寅'' ``卯'' ``辰'' ``巳'' ``戊'' ``未'' ``申'' ``酉'' ``戌'' ``亥''])
+
+;; 设置 calendar 的显示
+(setq calendar-remove-frame-by-deleting t)
+(setq calendar-week-start-day 1)            ; 设置星期一为每周的第一天
+(setq mark-diary-entries-in-calendar t)     ; 标记calendar上有diary的日期
+(setq mark-holidays-in-calendar nil)        ; 为了突出有diary的日期，calendar上不标记节日
+(setq view-calendar-holidays-initially nil) ; 打开calendar的时候不显示一堆节日
+
+;; 去掉不关心的节日，设定自己在意的节日，在 calendar 上用 h 显示节日
+(setq christian-holidays nil)
+(setq hebrew-holidays nil)
+(setq islamic-holidays nil)
+(setq solar-holidays nil)
+(setq general-holidays `((holiday-fixed 1 1 ``元旦'')
+                         (holiday-fixed 2 14 ``情人节'')
+                         (holiday-fixed 3 14 ``白色情人节'')
+                         (holiday-fixed 4 1 ``愚人节'')
+                         (holiday-fixed 5 1 ``劳动节'')
+                         (holiday-float 5 0 2 ``母亲节'')
+                         (holiday-fixed 6 1 ``儿童节'')
+                         (holiday-float 6 0 3 ``父亲节'')
+                         (holiday-fixed 7 1 ``建党节'')
+                         (holiday-fixed 8 1 ``建军节'')
+                         (holiday-fixed 9 10 ``教师节'')
+                         (holiday-fixed 10 1 ``国庆节'')
+                         (holiday-fixed 12 25 ``圣诞节'')))
+
+;;Calendar模式支持各种方式来更改当前日期
+;;（这里的“前”是指还没有到来的那一天，“后”是指已经过去的日子）
+;;  q      退出calendar模式
+;; C-f     让当前日期向前一天
+;; C-b     让当前日期向后一天
+;; C-n     让当前日期向前一周
+;; C-p     让当前日期向后一周
+;; M-\}     让当前日期向前一个月
+;; M-\{     让当前日期向后一个月
+;; C-x ]   让当前日期向前一年
+;; C-x [   让当前日期向后一年
+;; C-a     移动到当前周的第一天
+;; C-e     移动到当前周的最后一天
+;; M-a     移动到当前月的第一天
+;; M-e     多动到当前月的最后一天
+;; M-<     移动到当前年的第一天
+;; M->     移动到当前年的最后一天
+
+;;Calendar模式支持移动多种移动到特珠日期的方式
+;; g d     移动到一个特别的日期
+;;  o      使某个特殊的月分作为中间的月分
+;;  .      移动到当天的日期
+;; p d     显示某一天在一年中的位置，也显示本年度还有多少天。
+;; C-c C-l 刷新Calendar窗口
+
+;; Calendar支持生成LATEX代码。
+;; t m     按月生成日历
+;; t M     按月生成一个美化的日历
+;; t d     按当天日期生成一个当天日历
+;; t w 1   在一页上生成这个周的日历
+;; t w 2   在两页上生成这个周的日历
+;; t w 3   生成一个ISO-SYTLE风格的当前周日历
+;; t w 4   生成一个从周一开始的当前周日历
+;; t y     生成当前年的日历
+
+;;EMACS Calendar支持配置节日：
+;; h       显示当前的节日
+;; x       定义当天为某个节日
+;; u       取消当天已被定义的节日
+;; e       显示所有这前后共三个月的节日。
+;; M-x holiday  在另外的窗口的显示这前后三个月的节日。
+
+
+;; 另外，还有一些特殊的，有意思的命令：
+;; S       显示当天的日出日落时间(是大写的S)
+;; p C     显示农历可以使用
+;; g C     使用农历移动日期可以使用
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  日历设置结束 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  设置日记 ;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq diary-file ``\~{}/diary'');; 默认的日记文件
+(setq diary-mail-addr ``getmails@163.com'')
+(add-hook `diary-hook `appt-make-list)
+;;当你创建了一个'\~{}/diary'文件，你就可以使用calendar去查看里面的内容。你可以查看当天的事件，相关命令如下 ：
+;;  d     显示被选中的日期的所有事件
+;;  s     显示所有事件，包括过期的，未到期的等等
+
+;; 创建一个事件的样例：
+;; 02/11/1989
+;;     Bill B. visits Princeton today
+;;     2pm Cognitive Studies Committee meeting
+;;     2:30-5:30 Liz at Lawrenceville
+;;     4:00pm Dentist appt
+;;     7:30pm Dinner at George's
+;;     8:00-10:00pm concert
+
+;; 创建事件的命令：
+;; i d   为当天日期添加一个事件
+;; i w   为当天周创建一个周事件
+;; i m   为当前月创建一个月事件
+;; i y   为当前年创建一个年事件
+;; i a   为当前日期创建一个周年纪念日
+;; i c   创建一个循环的事件
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  设置日记结束  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 自定义lisp包设置  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;=======================五笔输入法设置======================
+;; (add-to-list `load-path ``\~{}/lisp/wubi/wubi'')
+;; (require `wubi)
+;; (register-input-method ``chinese-wubi'' ``Chinese-GB'' `quail-use-package ``wubi'' ``wubi'')
+;; (wubi-load-local-phrases)
+;; (setq default-input-method ``chinese-wubi'')
+
+
+;;这几句Lisp代码的作用是设置中文环境、注册五笔字型输入法。保存.emacs后请重新启动emacs，
+;;使得上面的设置生效。现在您可以用快捷键C-\textbackslash{} （同时按住 Ctrl和反斜线键）唤出五笔字型输入法了。
+;;在emacs的mode line上会出现“五笔字型”的字样。
+
+;=======================五笔输入法设置结束===================
+
+
+;======================= cscope 设置 \texttt{=====================}
+;;使用 cscope 浏览源代码,这个xcscope是个改进版，为每一次查找的结果使用不同 buffer ，
+;;这样就可以保存以前的结果。
+
+(add-to-list `load-path  ``\~{}/lisp/xcscope'') ;; 将软件包所在的路径加到 EMACS 的 load-path
+(require `xcscope) ;; 加载相应的软件
+
+;; C-c s a             设定初始化的目录，一般是你代码的根目录
+;; C-s s I             对目录中的相关文件建立列表并进行索引
+;; C-c s s             序找符号
+;; C-c s g             寻找全局的定义
+;; C-c s c             看看指定函数被哪些函数所调用
+;; C-c s C             看看指定函数调用了哪些函数
+;; C-c s e             寻找正则表达式
+;; C-c s f             寻找文件
+;; C-c s i             看看指定的文件被哪些文件include
+
+
+;===================== cscope 设置结束 \texttt{====================}
+
+
+;======================== tabbar设置 \texttt{======================}
+(add-to-list `load-path  ``\~{}/lisp/tabbar'')
+(require `tabbar)
+(tabbar-mode)
+;========================tabbar设置结束=======================
+
+
+;======================= wb-line-number设置 \texttt{================} 
+;;增加一个显示行号的buffer
+;(add-to-list `load-path  ``\~{}/lisp/wb-line-number'')
+;(require `wb-line-number)
+;(wb-line-number-enable)
+;====================== wb-line-number设置结束 \texttt{==============}
+
+;======================= setnu设置 \texttt{==========================} 
+;;再增加一个显示行号的功能
+(add-to-list `load-path  ``\~{}/lisp/setnu'')
+(require `setnu)
+(global-set-key [f2] (quote setnu-mode))
+
+;======================= setnu设置结束 ＝＝＝＝=================
+
+
+;====================== rect-mark设置 \texttt{=======================}
+;; 按下shift拖拽鼠标即可选择矩形区域
+;; Support for marking a rectangle of text with highlighting.
+(add-to-list `load-path  ``\~{}/lisp/rect-mark'')
+(require `rect-mark)
+(define-key ctl-x-map ``r\C-@'' `rm-set-mark)
+(define-key ctl-x-map [?r ?\C-\textbackslash{} ] `rm-set-mark)
+(define-key ctl-x-map ``r\C-x'' `rm-exchange-point-and-mark)
+(define-key ctl-x-map ``r\C-w'' `rm-kill-region)
+(define-key ctl-x-map ``r\M-w'' `rm-kill-ring-save)
+(define-key global-map [S-down-mouse-1] `rm-mouse-drag-region)
+(autoload `rm-set-mark ``rect-mark''
+  ``Set mark for rectangle.'' t)
+(autoload `rm-exchange-point-and-mark ``rect-mark''
+  ``Exchange point and mark for rectangle.'' t)
+(autoload `rm-kill-region ``rect-mark''
+  ``Kill a rectangular region and save it in the kill ring.'' t)
+(autoload `rm-kill-ring-save ``rect-mark''
+  ``Copy a rectangular region to the kill ring.'' t)
+(autoload `rm-mouse-drag-region ``rect-mark''
+  ``Drag out a rectangular region with the mouse.'' t)
+
+;; Use this section in your ``\~{}/.emacs'' to modify picture mode so that
+;; it automatically uses the rect-mark equivalents of many commands.
+
+;; One vision of a better picture mode.
+(add-hook `picture-mode-hook `rm-example-picture-mode-bindings)
+(autoload `rm-example-picture-mode-bindings ``rect-mark''
+  ``Example rect-mark key and mouse bindings for picture mode.'')
+
+;=====================  rect-mark设置结束 \texttt{=======================}
+
+;=====================  info文件设置 \texttt{============================}
+;;Info 的菜单是按 Info-directory-list 的顺序列出的，而 Info-directory-list 是在启动 info 时
+;;用Info-default-directory-list 来初始的。所以要添加 Info 目录是要设置 Info-default-directory-list。
+;;在添加的 Info 目录中，创建一个叫 dir 的文件（其实所有 Info-directory-list 里有一个文件就行了，
+;;在 \$\{emacs\}/info 文件夹下有这个文件，修改这个也可以）。
+
+(add-to-list `Info-default-directory-list  ``\~{}/lisp/info/'')
+
+;; n：跳转到该节点的下一个节点；           
+;; p：跳转到该节点的上一个节点；
+;; m: 指定菜单名而选择另外一个节点；
+;; f：进入交叉引用主题；
+;; l：进入该窗口中的最后一个节点；
+;; TAB：跳转到该窗口的下一个超文本链接；
+;; RET：进入光标处的超文本链接；
+;; u：转到上一级主题；
+;; d：回到 info 的初始节点目录；
+;; h：调出 info 教程；
+;; q：退出 info。
+
+;===================  info文件设置结束 \texttt{==========================}
+
+
+;===================== AUCTeX设置 \texttt{===============================}
+(load ``\~{}/lisp/auctex/site-lisp/auctex.el'' nil t t)
+(load ``\~{}/lisp/auctex/site-lisp/preview-latex.el'' nil t t)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(add-hook '\LaTeX{}-mode-hook \#'\LaTeX{}-install-toolbar)
+(add-hook '\LaTeX{}-mode-hook `turn-on-auto-fill)
+(add-hook '\LaTeX{}-mode-hook `turn-on-reftex)
+
+;===================== AUCTeX设置结束 \texttt{===========================}
+
+
+;===================== 文件头header设置 \texttt{=========================}
+;;当我们保存文件的时候,有很多信息可以自动更新.如何自动更新信息, 更新那些信息,
+;也是可以完全自己配置. 包括文件名称,最后一次修改时间,文件保存次数,最后一次修改的作者等等.
+;;可以用 M-x make-header 自动生成文件头信息. 
+(add-to-list `load-path  ``\~{}/lisp/header'')
+(require `header)
+(setq make-header-hooks `(header-mode-line
+                            header-blank
+                            header-file-name
+                            header-blank
+                            header-copyright
+                            header-blank
+                            header-author
+                            header-creation-date
+                            header-modification-author
+                            header-modification-date
+                            header-update-count
+                            header-blank
+                            header-history
+                            header-blank
+                            ))
+(setq header-copyright-notice ``  源成工作室 作品'' )
+(make-local-variable `user-full-name)
+(make-local-variable `user-mail-address)
+
+;===================== 文件头header设置结束 \texttt{========================}
+
+
+;===================== template设置 \texttt{===============================}
+(add-to-list `load-path  ``\~{}/lisp/template'')
+(require `template)
+(template-initialize)
+
+;===================== template设置结束===============================
+
+;===================== cedet设置 \texttt{===================================}
+
+(add-to-list `load-path ``\~{}/lisp/cedet-1.0pre3/speedbar'')
+(add-to-list `load-path ``\~{}/lisp/cedet-1.0pre3/eieio'')
+(add-to-list `load-path ``\~{}/lisp/cedet-1.0pre3/semantic'')
+(add-to-list `load-path ``\~{}/lisp/cedet-1.0pre3/common'')
+(require `cedet)
+;; (add-to-list `load-path ``\~{}/lisp/ecb-2.32'')
+;; (require `ecb)
+
+;; Ecb的操作:
+;; C-c . g d 目录列表窗口
+;; C-c . g s 源码窗口
+;; C-c . g m 方法和变量窗口
+;; C-c . g h 历史窗口
+;; C-c . g l 最后选择过的编辑窗口
+;; C-c . g 1 编辑窗口1
+;; C-c . g n 编辑窗口n
+;; C-c . l c 选择版面
+;; C-c . l r 重画版面
+;; C-c . l t 拴牢版面(锁定版面)
+;; C-c . l w 拴牢可见的ecb窗口
+;; C-c . \textbackslash{}   拴牢编绎窗口
+
+;; 其中l为小写字母(L),大家别看错!!
+
+;======================cedet设置结束==================================
+
+ 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;; 自定义lisp包设置结束  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ 
+
+
+;=====================    GNUS设置  \texttt{===============================}
+(setq gnus-select-method `(nntp ``news.yaako.com''))
+(setq gnus-default-subscribed-newsgroups
+  `( ``cn.comp.os.linux'')) ;;
+
+;; (add-to-list `gnus-secondary-select-methods `(nntp ``news.yourSecondProvider.net''))
+;; (add-to-list `gnus-secondary-select-methods `(nntp ``news.yourThirdProvider.net''))
+;;想让 Gnus 在多个的服务器上取新闻
+
+
+;;中文相关
+(set-language-environment `Chinese-GB)
+(setq gnus-default-charset `chinese-iso-8bit
+   gnus-group-name-charset-group-alist `((``.*'' . chinese-iso-8bit))
+   gnus-summary-show-article-charset-alist
+       `((1 . chinese-iso-8bit)
+         (2 . gbk)
+         (3 . big5)
+         (4 . utf-8))
+   gnus-newsgroup-ignored-charsets
+       `(unknown-8bit x-unknown iso-8859-1))
+
+
+(setq mail-sources
+       `((pop :server ``pop3.163.com'' ;; 在这里设置pop3服务器
+       :user ``66656799'' ;; 用户名
+;;       :port ``110''
+       :password ``wcmwlw''))) ;; 密码
+(setq gnus-secondary-select-methods `((nnfolder ``'')))
+
+ 
+
+(setq user-full-name ``getmails'') ;; 外发的邮件采用这个名字
+(setq user-mail-address ``getmails@163.com'') ;;外发的邮件采用这个地址
+(setq smtpmail-auth-credentials
+      `((``smtp.163.com'' ;; SMTP服务器
+      25
+      ``getmails'' ;; 用户名
+      ``wcmwlw''))) ;; 密码
+(setq smtpmail-default-smtp-server ``smtp.163.com'')
+(setq smtpmail-smtp-server ``smtp.163.com'')
+(setq message-send-mail-function `smtpmail-send-it)
+
+(setq nnmail-expiry-wait 3);;Gnus 默认的保质期是7天，如果你觉得时间不合适，可以自己设置
+
+(add-hook `gnus-article-prepare-hook
+          (lambda ()
+            (setq fill-column 60)
+            (gnus-article-fill-long-lines)))
+;;让gnus把这种邮件排版整齐后再显示给我们看
+
+(add-hook `gnus-article-prepare-hook `gnus-article-date-local)
+;;将邮件的发出时间转换为本地时间
+
+(gnus-add-configuration `(article
+                          (vertical 1.0
+                                    (summary .4 point)
+                                    (article 1.0))))
+;; 改变阅读新闻时窗口的布局，窗口划分为上4下6（比例）
+
+(eval-after-load ``mm-decode''
+  `(progn
+     (add-to-list `mm-discouraged-alternatives ``text/html'')
+     (add-to-list `mm-discouraged-alternatives ``text/richtext''))) 
+;另外，有些用web方式发出的邮件里有html，加入下面的设置，只看其中的
+;plain text部分：
+
+(setq gnus-thread-sort-functions
+      `(
+        (not gnus-thread-sort-by-date)
+        (not gnus-thread-sort-by-number)
+        ))
+;;排序
+
+(add-hook `gnus-group-mode-hook `gnus-topic-mode)
+;; 有时订阅了很多新闻组，堆在一起不好管理。这个功能可以创建目录来分层管理
+
+(setq gnus-read-newsrc-file nil  gnus-save-newsrc-file nil)
+
+;========================   GNUS设置结束  \texttt{=============================}
+
+ 
+
+;;=========================== 方便编程操作的设置=====================================
+
+(setq compile-command ``make'')
+;;emacs的默认compile命令是调用make -k，我把它改成了make。你也可以把它改成其他的，比如gcc之类的.
+
+;;把c语言风格设置为k\&r风格
+(add-hook `c-mode-hook
+`(lambda ()
+(c-set-style ``k\&r'')))
+
+;;把C++语言风格设置为stroustrup风格
+(add-hook `c++-mode-hook
+`(lambda()
+(c-set-style ``stroustrup'')))
+
+;========================================================================
+
+(load-library ``hideshow'') 
+(add-hook `c-mode-hook `hs-minor-mode)
+(add-hook `c++-mode-hook `hs-minor-mode)
+(add-hook `java-mode-hook `hs-minor-mode)
+(add-hook `perl-mode-hook `hs-minor-mode)
+(add-hook `php-mode-hook `hs-minor-mode)
+(add-hook `emacs-lisp-mode-hook `hs-minor-mode)
+;;能把一个代码块缩起来，需要的时候再展开
+;;  M-x              hs-minor-mode
+;;  C-c @ ESC C-s    show all
+;;  C-c @ ESC C-h    hide all
+;;  C-c @ C-s        show block
+;;  C-c @ C-h        hide block
+;;  C-c @ C-c toggle hide/show
+
+;========================================================================
+
+(defun my-c-mode-auto-pair ()
+  (interactive)
+  (make-local-variable `skeleton-pair-alist)
+  (setq skeleton-pair-alist  `(
+    (?` ?` \_{} ``'''')
+    (?\( ?  \_{} `` )'')
+    (?\[ ?  \_{} `` ]'')
+    (?\{ \n > \_{} \n ?\} >)))
+  (setq skeleton-pair t)
+  (local-set-key (kbd ``(``) `skeleton-pair-insert-maybe)
+  (local-set-key (kbd ``\{'') `skeleton-pair-insert-maybe)
+  (local-set-key (kbd ```'') `skeleton-pair-insert-maybe)
+  (local-set-key (kbd ``[``) `skeleton-pair-insert-maybe))
+(add-hook `c-mode-hook `my-c-mode-auto-pair)
+(add-hook `c++-mode-hook `my-c-mode-auto-pair)
+;;输入左边的括号，就会自动补全右边的部分.包括(), ``'', [] , \{\} , 等等。
+
+;=========================================================================
+(setq semantic-load-turn-everything-on t) 
+;(add-hook `semantic-init-hooks `semantic-idle-completions-mode)
+
+(setq semanticdb-project-roots 
+        (list
+        (expand-file-name ``/'')))
+;;配置Semantic的检索范围
+
+(setq semanticdb-default-save-directory ``\~{}/'')
+;;设置semantic.cache路径
+
+(global-set-key [(meta ?/)] `hippie-expand)
+;;M-/ 绑定到 hippie-expand
+
+(autoload `senator-try-expand-semantic ``senator'')
+(setq hippie-expand-try-functions-list 
+      `(senator-try-expand-semantic  ;优先调用了senator的分析结果
+        try-expand-dabbrev     ;当前的buffer补全
+ try-expand-dabbrev-visible   ;别的可见的窗口里寻找补全
+ try-expand-dabbrev-all-buffers  ;所有打开的buffer
+ try-expand-dabbrev-from-kill
+ try-complete-file-name-partially
+ try-complete-file-name
+ try-expand-all-abbrevs
+ try-expand-list
+ try-expand-line
+ try-complete-lisp-symbol-partially
+ try-complete-lisp-symbol))
+;设置 hippie-expand 的补全方式。它是一个优先列表， hippie-expand 会优先使用表最前面的函数来补全。
+
+;=========================================================================
+
+
+;==========================================================================
+
+ 
+
+;;========================== 方便编程操作设置结束====================================
+\end{itemize} % ends low level
+\section{做星号标记}
+\label{sec-2}
+
+m/      列出所有有星号标记的邮件
+u       清除标记
+U       清除所有带有指定标记的标记
+x       对所有标记进行处理(比如标记为D的邮件将真正被删除)
+ENTER   让阅读的邮件向下滚动一行
+\begin{itemize}
+\item 向上滚动一行
+\end{itemize}
+n       下一封邮件
+p       前一封邮件
+j       跳到某一封邮件
+N       下一封带星号的邮件
+P       上一封带星号的邮件
+S       按某个指定项目对邮件排序
+/       按指定条件搜索邮件，并进入虚拟模式
+tt      进入虚拟模式，根据线索查看，普通模式下是不可以的
+v       切换''Summary mode only'' 和 ``Summary \& Message mode''模式
+C-c C-m 编辑新邮件，放入草稿中
+Z       更新地址簿
+也可以直接使用 mew-send 命令来撰写新邮件，撰写新邮件的时候常用命令如下：
+
+key     功能描述
+C-c C-q 不保存退出（取消草稿）
+C-c C-a 准备插入附件
+mew-attach-copy 用复制方式加入附件
+mew-attach-link 用链接方式加入附件
+mew-attach-delete       删除附件
+C-c C-c 发送邮件
+C-c RET 保存邮件到发送队列
+注意，对附件的操作都要在 C-c C-a 命令之后。还有两个命令很重要：
+
+key     功能描述
+C       如果设置了多个邮箱，用 C 命令切换
+Q       退出Mew
+另外，在使用Mew的时候，emacs会出现Mew菜单，很多命令都可以从菜单上找到。
+
+在用指令”w“写邮件时，如果要抄送给一些人，则在 ``To:''后面回车，输入''c''， 并按''TAB''键即会出现''Cc:''。
+
+3.2 地址簿
+
+Mew 提供地址自动完成功能，在输入地址的时候可以使用 TAB 键来进行自动完成，自动完成有几个信息来源：
+
+地址簿中指定的扩展规则
+地址簿中提供的个人信息
+发送邮件的时候自动学习记录下来的地址
+Mew 提供两种补全方式，由变量 mew-use-full-alias 来控制，这个变量默认情 况下是 nil ，就是第一种补全方式，我们通常使用这种。两种补全方式的优缺 点可以参考 mew 的文档。
+
+Mew 的地址簿默认是 \~{}/Mail/Addrbook 这个文件，里面有两种信息：扩展规则和个人信息。
+
+扩展规则的格式是：
+
+<shortname>: <address1>[, <address2>, <address3, \ldots{}]
+我们通常不使用这个，不过如果需要一个名称扩展到多个地址的时候可以使用这个，例如：
+
+friends: pluskid@mstczju.org, pluskid.zju@gmail.com
+另外一种格式是个人信息的存放格式：
+
+<shortname> <address1>[, <address2>, <address3>, \ldots{}] <nickname> <fullname>
+注意这里没有冒号了。如果使用第一种补全方式，那么可以通过不断地按 TAB 键来在个人信息里面指定的各个邮件地址之间循环，而不是向扩展规则中指定的 那样一下子把全部地址扩展出来。另外， nickname 和 fullname 也是很有用 的，例如，在 summary-mode 里面可以以 nickname 来代替发件人地址显示出来。
+
+另外，还可以使用 \# 或者 ; 作为注释，需要注意的是， ; 只有在行首的时候被认为是注释，而 \# 则可以用在任何地方。
+
+修改了地址簿之后，可以在 summary-mode 里面按 Z 提示 mew 读取更新后的地址簿的信息。
+
+作为一个例子，假如地址簿里面有一条：
+
+kid pluskid@mstczju.org, pluskid.zju@gmail.com pluskid pluskid
+并且使用第一种补全方式。那么，在输入 k 之后按 TAB (假如没有其他匹配的 选项)，就会补全为 kid ，继续按 TAB ，则会出现 pluskid@mstczju.org ，再 按 TAB 则变为下一个地址 pluskid.zju@gmail.com ，这个时候按下 M-TAB ， 则会变为 pluskid <pluskid.zju@gmail.com> 的样子。非常方便吧？
+
+3.3 邮件分类
+
+Mew 有非常方便的邮件分类功能，正如他文档里面所说的那样：“Happy refiling”。因为他有一套复杂的算法来自动计算邮件应该被归到的类别。在 summary-mode 里面按 o 即可对当前邮件进行分类(将所有邮件按照设定规则 进行分类按 M-o )，mew 会问你把邮件分类到哪 个文件夹里面去，并提供了一个默认的选项，通常情况下默认选项就是正确的选 项，所以直接回车就可以了。按照文件夹来猜测分类
+
+通常我们会把同一个邮件列表里面的所有邮件归类到一个文件夹里面，mew 也对 这个功能提供了支持。例如，我有一个叫做 +misc/allmstc 的文件夹，那么这样 一封邮件会被 mew 猜测应该是归类到这个文件夹里面去：
+
+To: allmstc@mstczju.org
+
+因为 mew 会自动搜索是否存在对应于 To: 和 Cc: 的文件夹。如果你对猜测的文 件夹不满意，可以自己输入一个，如果这个文件夹不存在，它会被创建并自动添 加到文件夹列表里面(通常保存在 \~{}/Mail/.mew-folder-alist 里面)。
+
+另外，如果你只使用小写字母命名自己的邮件文件夹的话，把 mew-use-fast-refile 设置为 t 用于加快速度。通常我们使用多层文件夹，默认 情况下每一层文件夹都被作为一个可用的邮件文件夹，但是我们通常只希望使用 最后一层文件夹(例如 +misc/allmstc ，我们希望 allmstc 作为一个邮件文件 夹，而 misc 只是作为一个大类，并不用于存放文件。)，那么只需要把 mew-use-node-folder 设置为 nil 即可。
+
+3.4 附件处理
+
+发送附件
+
+Mew 允许你轻松编辑一个复杂的多媒体邮件。在编辑邮件的时候，按 C-c C-a 即可开始添加附件，这个时候邮件的末尾会出现如下类似的字样：
+
+------------------------------ attachments ------------------------------
+      Multipart/Mixed                                                                   1/
+     1  Text/Plain(guess)                                                                 *Cover.txt
+     2                                                                                    .
+--------0-1-2-3-4-5-6-7-8-9----------------------------------------------
+其中 1/ 是一个用于处理附件的临时目录，默认是 \~{}/Mail/attach/1 这个目录。 默认已经插入的这个附件 Cover.txt 其实就是邮件的文本内容。这个时候按下 c 即可添加附件，输入要添加的附件的路径即可把附件拷贝到这个临时目录下 面，也可以使用 l 来创建链接，但是如果要编辑附件的话，最好使用 c 来拷 贝，免得修改了原来的文件。
+
+另外，除了添加已经存在的附件以外，还可以使用 F 来打开一个新的文件进行 编辑并添加为附件。随时可以使用 f 命令重新打开一个附件进行编辑，使用=P= 来改名或者使用 d 进行删除。
+
+m 可以建立子目录，在附件多的时候可以方便对附件进行分类管理。 C-f 和 C-b 可以在不同层次的目录之间切换。
+
+3.5 手工删除服务器端的邮件
+
+按 g ，输入 \$inbox 进入 pop 服务器的的inbox邮箱，选中要删除的邮件 按 d ，然后按 x 执行删除操作。这样会直接删除掉邮件服务器上的邮件。 \$ 的含义参见 \href{http://www.mew.org/en/info/release/mew_1.html#folder-convention}{http://www.mew.org/en/info/release/mew\_1.html\#folder-convention} 。
+
+4 特别说明
+
+在按照官方文档说明试验 mew-use-master-passwd 时，总是不能正确的设 置或是使用主密码，老是提示 master password wrong ，即使用 C-c C-m 去重设主密码也一样是不行，所以现在只能采用 mew-use-cached-passwd 方式了。主密码文件存放在 \~{}/Mail 目录下（要 用 ls -al 才能看到这个文件），可 以删除主密码文件。
+
+5 TODO 遗留问题
+
+State ``TODO'' from ``'' 2010-05-09 日 20:19
+5.1 TODO gmail的imap方式帐号配置
+
+State ``TODO'' from ``'' 2010-05-13 四 08:34
+5.2 TODO 发送中文名称的附件时无法发送
+
+State ``TODO'' from ``'' 2010-05-13 四 08:34
+6 参考资料
+
+Mew官方文档
+\href{http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html}{http://learn.tsinghua.edu.cn:8080/2004211031/publish/GNU/mew.html}
+\href{http://wangcong.org/blog/?p=300}{http://wangcong.org/blog/?p=300}
+\href{http://wangcong.org/down/dotmew.el}{http://wangcong.org/down/dotmew.el}
+\href{http://lifegoo.pluskid.org/wiki/Mew.html}{http://lifegoo.pluskid.org/wiki/Mew.html}
+6.1 emacs mew 设置指南
+
+\href{http://baiyhome.spaces.live.com/blog/cns!6CC0192DC1074113!256.entry}{http://baiyhome.spaces.live.com/blog/cns!6CC0192DC1074113!256.entry}
+
+6.1.1 介绍
+
+强大的邮件客户端
+
+6.1.2 基本设置
+
+;;设置 Mew
+(setq load-path (add-to-list `load-path ``/your mew home'')) (setq exec-path (cons ``/your mew home/bin/'' exec-path))
+(autoload `mew ``mew'' nil t)
+(autoload `mew-send ``mew'' nil t)
+;;;下面的图标路径和安装路径有关，具体请看Mew的安装过程
+(setq mew-icon-directory ``/your mew home/etc'')
+(setq mew-use-cached-passwd t)
+;;mew-pop-size设置成0时，pop邮件大小没有限制
+(setq mew-pop-size 0)
+6.1.3 帐户设置
+
+(setq mew-config-alist
+  `(
+(``default''
+ (``name''         .  ``User'')
+ (``user''         .  ``user@yourmail.com'')
+ (``mail-domain''  .  ``yourmail.com'')
+ (``pop-server''   .  ``pop.yourmail.com'')
+ (``pop-port''     .  ``110'')
+ (``pop-user''     .  ``user'')
+ (``pop-pass''     .  ``password'')
+ (``pop-auth''     .  pass)
+ (``smtp-server''  .  ``smtp.yourmail.com'')
+ (``smtp-port''    .  ``25'')
+;;   (``inbox-folder'' .  ``+inbox-mail-work'');;这个最好是以+inbox开头，否则有些功能不能用（比如sort），不知道是不是这个原因，我直接用mail-work是不行的。
+ (``smtp-user''    .  ``user'')
+ (``smtp-auth-list''  .  (``PLAIN'' ``LOGIN'' ``CRAM-MD5''))
+ )
+;;(``其它用户''
+;;  \ldots{}.\ldots{}.\ldots{}.\ldots{}...
+;;)
+)
+6.1.4 html邮件相关设置
+
+ (setq mew-prog-text/html         `mew-mime-text/html-w3m) ;; See w3m.el
+ (setq mew-prog-text/html-ext     ``/usr/bin/firefox'')
+
+ (setq mew-prog-text/xml         `mew-mime-text/html-w3m) ;; See w3m.el
+ (setq mew-prog-text/xml-ext     ``/usr/bin/firefox'')
+
+ (setq mew-prog-application/xml         `mew-mime-text/html-w3m)
+ (setq mew-prog-application/xml-ext     ``/usr/bin/firefox'')
+
+(setq mew-prog-application/X-Dvi         ``/usr/bin/xdvi'')
+
+;; ;;使用w3m 
+ (setq mew-mime-multipart-alternative-list `(``text/html'' ``text/plain'' ``*.''))
+ (condition-case nil
+ (require `mew-w3m)
+(file-error nil))
+(setq mew-use-w3m-minor-mode t)
+(setq mew-w3m-auto-insert-image t)
+6.1.5 biff设置（新邮件通知）
+
+首先要下载 biff.el 这个文件，在.emacs中加入
+
+(load ``biff'')
+这是最近才知道需要这个的。
+;; ;;
+;; ;; Biff
+;; ;; 
+(setq mew-use-cached-passwd t);;必须
+(setq mew-use-biff t)
+(setq mew-use-biff-bell t)
+(setq mew-biff-interval 5) ；这个值一定要小于下面的timer-unit和lifetime值，这个可以使用describe-variable查看一下
+(setq mew-pop-biff-interval 3)
+(setq mew-passwd-timer-unit 60)       ; 60 minutes = 1 hour                                            
+(setq mew-passwd-lifetime 24)         ; timer-unit x 24 = 24 hours 
+上面是设置biff每隔五分钟自动检查一下邮箱，如果有新邮件，则emacs的状态 栏上会有Mail(n)的提示—n表示新邮件数目。有人实现了可以播放其它声音， 抄录如下：
+
+(setq mew-arrivedmail-pending 0)
+(defadvice mew-biff-bark (before mew-biff-sound (arg))
+  ``Play a sound, if new Mail arrives''
+  (cond ((and (> arg 0) (> arg mew-arrivedmail-pending))
+     (setq mew-arrivedmail-pending arg)
+     (start-process-shell-command    ``mail-sound''   ``*Messages*''
+                                      ``sndplay \~{}/.elisp/mail.wav''))
+                  ;; replace sndplay with your favorite command to
+                  ;; play a sound-file
+    ((= arg 0)
+     (if (> mew-arrivedmail-pending 0)
+         (setq mew-arrivedmail-pending 0)))))
+(ad-activate `mew-biff-bark)
+6.1.6 其它设置
+
+(setq mew-auto-get t) ;;;mew启动时自动获取邮件
+
+;; (setq mew-window-use-full t)
+;; (setq mew-underline-lines-use t)
+;; (setq mew-use-fancy-thread t)
+;; (setq mew-use-fancy-highlight-body t)
+;; (setq mew-fancy-highlight-body-prefix-width 10)
+;;(setq mew-highlight-body-regex-comment ``^[;\#?\%]+.*'')
+;; (setq mew-prog-imls-arg-list `(``--thread=yes'' ``--indent=2''))
+;;(setq mew-use-highlight-mouse-line t)
+
+;; ;; unread mark
+(setq mew-use-unread-mark t) 
+(setq mew-unread-mark-list `((t t)))
+(setq mew-delete-unread-mark-by-mark nil)
+6.1.7 基本操作介绍
+
+g       检查邮件
+S       排序
+a       回复
+h       返回邮件列表（从邮件正文）
+v       只显示邮件列表，即关闭邮件正文
+.       重新分析邮件，对于MIME类型的邮件比较有用。
+6.2 星黎殿的Mew设置
+
+\href{http://lifegoo.pluskid.org/wiki/Mew.html}{http://lifegoo.pluskid.org/wiki/Mew.html}
+
+6.3 mew 配置参考
+
+摘自：\href{http://cermics.enpc.fr/~lelong/Emacs/dotmewdotel.html}{http://cermics.enpc.fr/\~lelong/Emacs/dotmewdotel.html}
+
+;; -*-mode:lisp; coding:latin-1-*-
+
+;; Author : Jérôme LELONG
+;; address@server
+;; \href{http://cermics.enpc.fr/~lelong}{http://cermics.enpc.fr/\~lelong}
+;; Unlimited permission is granted to use, copy, distribute, and/or
+;; modify this program.  There is NO WARRANTY.
+
+
+
+;; ----------------------------------------------- ;;
+;; to handle several accounts.
+;; use C to change account when in summary mode
+(setq mew-config-alist
+      `(
+        (``default''
+         (``mailbox-type'' . imap)
+         (``proto'' . ``\%'')
+         (``imap-server'' . ``mailhost1.ensta.fr'')
+         (``imap-ssl'' . t)
+         (``imap-user'' . `` ``) ;; to be completed
+         (``user'' . `` ``) ;; to be completed
+         (``name'' . `` ``) ;; to be completed
+         (``imap-delete'' . nil)
+         (``imap-size'' . 0)
+         (``smtp-server'' . ``mailhost1.ensta.fr'')
+         (``smtp-ssl'' . nil )
+         (``mail-domain'' . ``ensta.fr'')
+         (``fcc'' . ``\%Sent'')
+         (``inbox-folder'' . ``\%inbox'')
+         (``imap-friend-folder'' . ``\%from'')
+         (``imap-trash-folder'' . ``\%Trash'')
+         )
+        (``cermics''
+         (``mailbox-type'' . imap)
+         (``proto'' . ``\%'')
+         (``imap-server'' . ``cermics.enpc.fr'')
+         (``imap-ssl'' . t)
+         (``imap-user'' . `` ``) ;; to be completed
+         (``user'' . `` ``) ;; to be completed
+         (``name'' . `` ``) ;; to be completed
+         (``imap-delete'' . nil)
+         (``imap-size'' . 0)
+         (``smtp-server'' . ``cermics.enpc.fr'')
+         (``mail-domain'' . ``cermics.enpc.fr'')
+         (``signature-file'' . ``\~{}/.signature.mew'')
+         (``fcc'' . ``\%mail$_{\mathrm{imap}}$/Sent'')
+         (``inbox-folder'' . ``\%inbox'')
+         (``imap-friend-folder'' . ``\%mail$_{\mathrm{imap}}$/from'')
+         (``imap-trash-folder'' . ``\%mail$_{\mathrm{imap}}$/Trash'')
+         )
+        (``cermics-ssh''
+         (``mailbox-type'' . imap)
+         (``proto'' . ``\%'')
+         (``imap-ssh-server'' . ``cermics.enpc.fr'')
+         (``imap-server'' . ``cermics.enpc.fr'')
+         (``imap-ssl'' . nil)
+         (``imap-user'' . `` ``) ;; to be completed
+         (``imap-delete'' . nil)
+         (``imap-size'' . 0)
+         (``name'' . `` ``) ;; to be completed
+         (``user'' . `` ``) ;; to be completed
+         (``smtp-ssh-server'' . ``cermics.enpc.fr'')
+         (``smtp-server'' . ``cermics.enpc.fr'')
+         (``smtp-ssl'' . nil)
+         (``mail-domain'' . ``cermics.enpc.fr'')
+         (``fcc'' . ``\%mail$_{\mathrm{imap}}$/Sent'')
+         (``inbox-folder'' . ``\%inbox'')
+         (``imap-friend-folder'' . ``\%mail$_{\mathrm{imap}}$/from'')
+         (``imap-trash-folder'' . ``\%mail$_{\mathrm{imap}}$/Trash'')
+         )
+        (``inria''
+         (``mailbox-type'' . imap)
+         (``imap-ssl'' . t)
+         (``proto'' . ``\%'')
+         (``pop-server'' . ``imaps-rocq.inria.fr'')
+         (``name'' . `` ``) ;; to be completed
+         (``user'' . `` ``) ;; to be completed
+         (``smtp-server'' . ``mailhost.inria.fr'')
+         (``imap-user'' . `` ``) ;; to be completed
+         (``mail-domain'' . ``inria.fr'')
+         (``signature-file'' . ``\~{}/.signature.mew'')
+         )
+        (``neuf''
+         (``mailbox-type'' . imap)
+         (``imap-ssl'' . nil)
+         (``proto'' . ``\%'')
+         (``imap-server'' . ``imap.neuf.fr'')
+         (``name'' . `` ``) ;; to be completed
+         (``imap-user'' . `` ``) ;; to be completed
+         (``user'' . `` ``) ;; to be completed
+         (``imap-delete'' . nil)
+         (``imap-size'' . 0)
+         (``smtp-server'' . ``localhost'')
+         (``mail-domain'' . ``neuf.fr'')
+         (``inbox-folder'' . ``\%debian'')
+         (``fcc'' . ``\%Sent'')
+         (``imap-trash-folder'' . ``\%Trash'')
+         (``signature-file'' . ``\~{}/.signature.mew.neuf'')
+         )
+        (``neuf-smtp''
+         (``smtp-ssl'' . nil )
+         (``smtp-server'' . ``smtp.neuf.fr'')
+         )
+        (``cermics-smtp''
+         (``smtp-user'' . ``lelong'')
+         (``smtp-server'' . ``cermics.enpc.fr'')
+         (``smtp-ssl'' . t )
+         (``smtp-ssl-port'' . 587)
+         (``smtp-port'' . 587)
+         )
+        (``inria-smtp''
+         (``smtp-server'' . ``mailhost.inria.fr'')
+         (``smtp-ssl'' . nil )
+         (``smtp-port'' . 25)
+         )
+        (``local''
+         (``mailbox-type'' . mbox)
+         (``proto'' . ``+'')
+         (``name'' . `` ``) ;; to be completed
+         (``mbox-command-arg'' . ``-c -u -d /var/mail/jl'')
+         (``inbox-folder'' . ``+system'')
+         )
+        )
+      )
+
+
+;; ----------------------------------------------- ;;
+;; general config for all accounts
+
+(setq mew-smtp-ssl-port ``465'')
+(setq mew-prog-ssl ``/opt/local/bin/stunnel'')
+(setq mew-ssl-verify-level 0)
+(setq mew-pop-auth `pass) 
+(setq mew-pop-size 0)
+(setq mew-smtp-port ``25'')
+(setq mew-mbox-command ``incm'')
+(setq mew-auto-flush-queue t)
+(setq mew-decode-broken t)
+(setq mew-summary-form-mark-spam t)
+;; ----------------------------------------------- ;;
+
+
+;; ----------------------------------------------- ;;
+;; Default paths
+(setq mew-mail-path ``\~{}/.Mail-Mew'')
+(setq mew-conf-path mew-mail-path)
+(setq mew-addrbook-file ``\~{}/live/dotfiles/.Addressbook'')
+
+;;; remember last directory when saving
+(setq mew-summary-preserve-dir t)
+(setq mew-draft-preserve-dir t)
+;; ----------------------------------------------- ;;
+
+
+
+
+
+;; ----------------------------------------------- ;;
+;; insert signature
+(setq mew-signature-insert-last nil)
+(setq mew-signature-as-lastpart nil)
+(add-hook `mew-before-cite-hook `mew-header-goto-body)
+;; (add-hook `mew-draft-mode-newdraft-hook `my-mew-draft-append-signature)
+;; (defun my-mew-draft-append-signature ()
+;;   (let ((mew-signature-insert-last t))
+;;     (mew-draft-insert-signature)))
+;; ----------------------------------------------- ;;
+
+
+
+;; ----------------------------------------------- ;;
+;; Password
+;; WARNING: Password is stored in Emacs with RAW format.
+(setq mew-use-cached-passwd t)    ;; nil
+(setq mew-passwd-timer-unit 1)    ;; 10 (minutes)
+(setq mew-passwd-lifetime 300000) ;; 2
+;; ----------------------------------------------- ;;
+
+
+;; ----------------------------------------------- ;;
+;; Biff
+(setq mew-auto-get nil)
+(setq mew-use-biff t)                         ;; nil
+(setq mew-use-biff-bell t)                      ;; nil
+(setq mew-imap-biff-interval 4)                 ;; 5 (minutes)
+(setq mew-biff-interval mew-imap-biff-interval) ;; for Mew 
+;; ----------------------------------------------- ;;
+
+
+
+(setq mew-use-alternative nil)
+
+(defvar mew-field-circular-completion-switch
+  `((``To:'' . mew-circular-complete-domain)))
+
+
+;; ----------------------------------------------- ;;
+;; look and feel
+;;(setq mew-decode-broken nil)
+(setq mew-window-use-full t)
+(setq mew-underline-lines-use t)
+(setq mew-use-fancy-thread t)
+(setq mew-use-fancy-highlight-body t)
+(setq mew-fancy-highlight-body-prefix-width 10)
+(setq mew-highlight-body-regex-comment ``^[;\#?\%]+.*'')
+(setq mew-prog-imls-arg-list `(``--thread=yes'' ``--indent=2''))
+;;(setq mew-use-highlight-mouse-line t)
+;; ceci pour remplacer le curseur par une barre
+;; colorée, c'est selon les goûts
+(setq mew-use-highlight-cursor-line t)
+(setq mew-highlight-cursor-line-face `underline)
+(setq mew-use-cursor-mark t)
+;; La forme originale du sommaire ne me plait pas
+;;(setq mew-summary-form
+;;            `(type (5 date) `` `` (-4 size) `` `` (24 from) `` `` t (40 subj)))
+
+(setq mew-summary-form
+      `(type (5 date) `` `` (14 from) `` `` t (30 subj) ``|'' (0 body)))
+(setq mew-sort-default-key ``x-date-count'')
+
+(set-face-foreground   `mew-face-mark-delete    ``red'') 
+(set-face-bold-p       `mew-face-mark-delete  t)
+(set-face-foreground   `mew-face-mark-refile    ``darkgreen'') 
+(set-face-bold-p       `mew-face-mark-refile  t)
+(set-face-bold-p       `mew-face-mark-review  t)
+(set-face-bold-p       `mew-face-mark-unread  t)
+
+
+;; ----------------------------------------------- ;;
+
+
+;; ----------------------------------------------- ;;
+;; external applications
+(setq browse-url-netscape-program ``open'')
+(setq browse-url-mozilla-program ``open'')
+(setq thing-at-point-url-path-regexp ``[\~{}/A-Za-z0-9---_.\$\{\}\#\%,:]+'')
+
+(setq mew-prog-text/html         `mew-mime-text/html-w3m) 
+(setq mew-prog-text/html-ext    ``open'')
+(setq mew-prog-text/xml         `mew-mime-text/html-w3m) 
+(setq mew-prog-text/xml-ext     ``open'')
+(setq mew-prog-application/xml         nil)
+(setq mew-prog-application/xml-ext     ``open'')
+(setq browse-url-browser-function `browse-url-netscape)
+(setq mew-prog-pdf             ``open'')
+
+(setq mew-prog-msword `(``open'' nil t))
+(setq mew-prog-msexcel `(``open'' nil t))
+(setq mew-prog-mspowerpoint `(``open'' nil t))
+;; ----------------------------------------------- ;;
+
+
+;; ----------------------------------------------- ;;
+;; address@server browse-url
+(autoload `browse-url-interactive-arg ``browse-url'')
+(autoload `browse-url-browser-function ``browse-url''
+  ``Ask a WWW browser to show a URL.'' t)
+(autoload `browse-url-at-point ``browse-url''
+  ``Ask a WWW browser to load the URL at or before point.'' t)
+(autoload `browse-url-at-mouse ``browse-url''
+  ``Ask a WWW browser to load a URL clicked with the mouse.'' t)
+(autoload `browse-url-of-buffer ``browse-url''
+  ``Ask a WWW browser to display BUFFER.'' t)
+(autoload `browse-url-of-file ``browse-url''
+  ``Ask a WWW browser to display FILE.'' t)
+(autoload `browse-url-of-dired-file ``browse-url''
+  ``In Dired, ask a WWW browser to display the file named on this line.'' t)
+;; key bind
+;;  Mew Message mode
+(add-hook `mew-message-mode-hook
+          (function
+           (lambda ()
+            (local-set-key [mouse-2] `browse-url-at-mouse)
+            )))
+
+;; ----------------------------------------------- ;;
+
+
+;; ----------------------------------------------- ;;
+;; unread mark
+(setq mew-use-unread-mark t)  
+;; only put U on ``+inbox'' ``\%inbox'' ``+debian''
+(setq mew-unread-mark-list
+      `(((``+inbox'' ``\%inbox'' ``+debian'') t)
+        (t nil)))
+(setq mew-delete-unread-mark-by-mark nil)
+;; ----------------------------------------------- ;;
+
+
+
+;; ----------------------------------------------- ;;
+;; Auto-refile
+(defvar mew-refile-guess-control
+  `(mew-refile-guess-by-alist
+    mew-refile-guess-by-from
+    mew-refile-guess-by-default)
+  )
+
+(setq mew-refile-guess-alist
+      `(
+        (``From:''
+         (``address@server'' . ``\%from/jfd'')
+         (``address@server'' . ``\%from/bl'')
+         (``address@server'' . ``\%from/jpc'')
+         (``address@server'' . ``\%from/jacques.daniel'')
+         (``address@server'' . ``\%from/roland.jarry'')
+         (``address@server'' . ``\%teaching/ENSTA$_{\mathrm{3A}}$'')
+         )
+        (``To:''
+         (``address@server'' . ``\%from/jacques.daniel'')
+         (``address@server'' . ``\%from/roland.jarry'')
+         (``premia-address@server'' . ``\%premia-svn'')
+         (``premia-address@server'' . ``\%premia-devel'')
+         )
+        (``Subject:''
+         (``\\(ENSTA\\|MA\\ 101\\|MA204\\|MAE51\\)'' . ``\%teaching/ENSTA'')
+         (``Bug\#'' . ``+debian'')
+         )
+        )
+      )
+
+;; ----------------------------------------------- ;;
+
+
+;; ----------------------------------------------- ;;
+;; reply citation
+
+;; `body --> reply before citation
+;; `end  --> reply after citation
+(setq mew-summary-reply-with-citation-position `body)
+(setq mew-cite-hook `sc-cite-original)
+(setq sc-preferred-header-style 1)
+(setq sc-auto-fill-region-p t)
+(setq sc-reference-tag-string ``'')
+
+;; ;; when no supercite
+;; (setq mew-addrbook-for-cite-label `nickname)
+;; (setq mew-draft-cite-fill-mode `wrap)
+;; (setq mew-draft-cite-label-fill-column 50)
+
+;; (setq mew-cite-prefix-function (lambda()
+;;                               (setq prefix (mew-cite-prefix-username))
+;;                               (concat ``\t test'' prefix)
+;;                               )
+;;    )
+;; (setq mew-addrbook-for-cite-prefix `nickname)
+;; (setq mew-cite-fields `(``From:''))
+;; (setq mew-cite-format ``\n\n>>>>> \%s wrote:\n\n'')
+;; (setq mew-cite-prefix ``> ``)
+;; (setq mew-cite-fields `(``From:'' ``Subject:'' ``Date:''))
+;; (setq mew-cite-format 
+;; ``\n\n-------- Original Message ---------\n\
+;; From: \%s\nSubject: \%s\nDate: \%s\n\n'')
+;; ----------------------------------------------- ;;
+
+
+
+
+;; to use w3m
+(setq mew-mime-multipart-alternative-list `(``Text/Html'' ``Text/Plain'' ``*.''))
+
+
+(setq mew-mail-domain-list
+      `(``ensta.fr'' ``cermics.enpc.fr''))
+
+
+;; ----------------------------------------------- ;;
+;; dans affichage mew d'un mail, rendre visible X-Spam-Status
+(setq mew-field-spec 
+      `(
+        (``^Subject:$" t mew-face-header-important mew-face-header-subject)
+        ("^From:$" t mew-face-header-important mew-face-header-from)
+        (``^\\(To\\|Apparently-To\\):$" t mew-face-header-important
+         mew-face-header-to)
+        ("^\\(Cc\\|Bcc\\):$" t mew-face-header-important mew-face-header-to)
+        (``^Newsgroups:$" t mew-face-header-important mew-face-header-to)
+        ("^Date:$" t mew-face-header-important mew-face-header-date)
+        (``^Reply-To:$" t)
+        ("^X-Mailer:$" t)
+        (``^X-\texttt{Mew:$"} t mew-face-header-important mew-face-header-xmew)
+        (``\\(Received\\|Return-Path\\|Sender\\|Errors-To\\):$" nil)
+        ("\\(Message-Id\\|Posted\\|In-Reply-To\\|References\\|Precedence\\):$"
+         nil)
+        (``^Delivered-'' nil)
+        (``^List-'' nil)
+        (``^\\(Mime-Version\\|Lines\\):$" nil)
+        ("^From$" nil)
+        (``^Status:\$'' nil)
+        (``^X-Spam-Status'' nil )
+        (``^X-Spam-Probabilty'' nil )
+        (``^X-Spam-Flag'' nil)
+        (``^X-Spam-Level'' nil)
+        (``^X-'' nil mew-face-header-private mew-face-header-marginal)
+        (``Resent-'' nil)
+        (``^Received-SPF'' nil)
+        (``^\\(DKIM\\|DomainKey\\)-Signature:'' nil)
+        )
+      )
+;; pour voir toutes les adresses To mettre à nil
+(setq mew-use-header-veil t)
+;; ----------------------------------------------- ;;
+
+
+
+;; ----------------------------------------------- ;;
+;; Gnupg
+
+;; (setq mew-protect-privacy-always t)
+;; (setq mew-protect-privacy-always-type `pgp-signature)
+;; (setq mew-use-pgp-cached-passphrase t)
+;; (setq mew-pgp-server-url-template ``\href{http://pgp.mit.edu:11371/pks/lookup?op=get&search=0x4BB3C992"}{http://pgp.mit.edu:11371/pks/lookup?op=get\&search=0x4BB3C992''})
+;; ----------------------------------------------- ;;
+
+;; ----------------------------------------------- ;;
+;; Grep
+
+(setq mew-prog-grep ``grep'')                  ;; `C-u ?'
+(setq mew-prog-grep-opts `(``-i'' ``-l'' ``-e''))  ;; `(``-l'' ``-e'')
+(setq mew-prog-vgrep ``grep'')                 ;; Virtual mode
+(setq mew-prog-vgrep-opts `(``-i'' ``-l'' ``-e'')) ;; `(``-l'' ``-e'')
+;; ----------------------------------------------- ;;
+
+;; ----------------------------------------------- ;;
+;; Printing mail
+(setq mew-field-for-printing `(``Subject:'' ``From:'' ``To:'' ``Cc:'' ``Date:''))
+(setq mew-print-function `ps-print-buffer)
+;; ----------------------------------------------- ;;
+
+;; ----------------------------------------------- ;;
+;; Spell chacking
+(defun jl-spell-mail ( lang )
+  (interactive ``sLanguage  : fr br ``)
+  (if (string-equal lang ``fr'')
+      (setq ispell-local-dictionary ``francais'')
+      )
+  (if (string-equal lang ``br'')
+      (setq ispell-local-dictionary ``british'')
+      )
+  (save-excursion
+    (beginning-of-buffer)
+    (search-forward ``----'')
+    (defvar debut (point))
+    (search-forward ``--'')
+    (defvar fin (point))
+    (ispell-region debut fin)
+    )
+  )
+;; ----------------------------------------------- ;;
+
+
+;; ---------------------------------------- ;;
+;; A few more hooks
+(add-hook `mew-draft-mode-hook
+          `(lambda()
+            (define-key mew-draft-mode-map ``\C-zb''   `jl-spell-mail)
+            (setq fill-column 70)
+            (setq default-tab-width 4)
+            (auto-fill-mode 1)
+            (setq default-justification `full)))
+
+(add-hook `mew-summary-mode-hook
+          `(lambda ()
+            (define-key mew-summary-mode-map ``\C-zo''
+             `mew-summary-auto-refile)
+            (line-number-mode t)))
+;; ----------------------------------------------- ;;
+
+
+(defun jl-forward-inline ()
+  ``Forwards a message inline. Inspired from mew-summary-reply''
+  (interactive)
+  (mew-summary-msg-or-part
+   (mew-summary-not-in-draft
+    (mew-current-set-window-config)
+    (let* ((owin (selected-window))
+           (fld (mew-summary-folder-name))
+           (msg (mew-summary-message-number2))
+           (draft (mew-folder-new-message mew-draft-folder))
+           (to (and mew-ask-to (mew-input-address (concat mew-to: `` ``))))
+           (cc (and mew-ask-cc (mew-input-address (concat mew-cc: `` ``))))
+           (asked (or mew-ask-to mew-ask-cc))
+           msg-subject msg-to msg-from msg-date fwsubject cwin)
+      (mew-summary-prepare-draft
+       (mew-draft-find-and-switch draft t)
+       (mew-delete-directory-recursively (mew-attachdir draft))
+       (setq cwin (selected-window)) ;; draft
+       (select-window owin)
+       (mew-summary-set-message-buffer fld msg)
+       (setq msg-subject (mew-header-get-value mew-subj:))
+       (setq msg-to (mew-header-get-value mew-to:))
+       (setq msg-from (mew-header-get-value mew-from:))
+       (setq msg-date (mew-header-get-value mew-date:))
+       (if msg-subject
+           (setq fwsubject (mew-subject-simplify (concat mew-forward-string msg-subject))))
+       (select-window cwin) ;; draft
+       ;;
+       (mew-draft-header fwsubject `nl to cc nil nil nil nil asked)
+       (mew-draft-mode)
+       (end-of-buffer)
+       (save-excursion
+         (insert ``----------- Original Message  ---------\n'')
+         (insert ``Subject: ``) (insert msg-subject) (insert ``\n'')
+         (insert ``Date: ``) (insert msg-date) (insert ``\n'')
+         (insert ``From: ``) (insert msg-from) (insert ``\n'')
+         (insert ``To: ``) (insert msg-to) (insert ``\n'')
+         (insert ``\n\n'')
+         (mew-draft-yank)))))))
+
+;; ------------------------------------------ ;;
+;;using w3m
+(when (locate-library ``w3m'')
+(require `w3m)
+(condition-case nil
+    (require `mew-w3m)
+  (file-error nil))
+)
+  
+
+
+;;; END ;;
+
+syntax highlighted by Code2HTML, v. 0.9.1 
+
+\end{document}

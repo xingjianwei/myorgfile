@@ -20,6 +20,9 @@ my github:
 git config core.quotepath false
 core.quotepath设为false的话，就不会对0x80以上的字符进行quote。中文显示正常
 
+**** git utf-8
+http://code.google.com/p/utf8-git-on-windows/downloads/list
+
 ** 测试管理工具
 *** testlink
     http://192.168.100.5/tests
@@ -1034,6 +1037,78 @@ http://lifegoo.pluskid.org/wiki/Mew.html
 ;;; END ;;
 
 syntax highlighted by Code2HTML, v. 0.9.1 
+**** mew 在w32下适配emacs的问题
+在emacs中使用mew接收mime的邮件，打开附件时，
+
+mew-win32.el会指定打开程序默认程序fiber.exe
+
+网上没有找到这个程序。
+
+mew-win32.el
+
+(defvar mew-w32-exec           "fiber.exe")
+
+改为
+
+(defvar mew-w32-exec           "explorer.exe")
+
+然后把mew-mine.el:
+
+函数mew-summary-execute-program
+
+修改
+
+(require 'dired) ；；增加引用文件
+;;; external
+(defun mew-summary-execute-program (program ct ctl cache begin end params fname options async)
+  (if (not (mew-which-exec program))
+      (message "%s does not exist" program)
+    (let ((file (mew-make-temp-name fname))
+   wcs)
+      (save-excursion
+ (set-buffer cache)
+ ;; NEVER use call-process-region for privacy reasons
+ (cond
+  ((not (mew-ct-linebasep ct))
+   (setq wcs mew-cs-binary))
+  ((not (mew-ct-textp ct))
+   (setq wcs mew-cs-text-for-write))
+  (t
+   (cond
+    ((or (string= mew-ct-htm ct) (string= mew-ct-xml ct))
+     (setq wcs (mew-text/html-detect-cs begin end))
+     (unless (mew-coding-system-p wcs)
+       (setq wcs (mew-charset-to-cs
+    (mew-syntax-get-param ctl "charset")))))
+    (t
+     (setq wcs (mew-charset-to-cs
+         (mew-syntax-get-param ctl "charset")))))
+   (unless (mew-coding-system-p wcs)
+     (setq wcs (if mew-decode-broken
+     (mew-charset-to-cs
+      (mew-charset-guess-region
+       begin end))
+   mew-cs-text-for-write)))))
+ (mew-frwlet mew-cs-dummy wcs
+   (write-region begin end file nil 'no-msg))
+ (if async
+     (mew-mime-start-process program options (dired-replace-in-string "/" "\\" file) );yxf
+   (mew-mime-call-process program options (dired-replace-in-string "/" "\\" file) ))))));把路径中/改为"\"，以便explorer识别。
+*** latex
+暂时使用原来保持的格式存储，将内容拷贝过。
+
+ \documentclass[11pt]{article}
+ \usepackage[fntef,hyperref]{ctexcap}
+ \usepackage[T1]{fontenc}
+ \usepackage{graphicx}
+ \usepackage{longtable}
+ \usepackage{float}
+ \usepackage{wrapfig}
+ \usepackage{soul}
+ \usepackage{amssymb}
+ \usepackage{hyperref}
+ \usepackage{setspace}
+
 *** 常用命令整理
 时间：2007-01-19 11:14:33  来源：chinaunix  作者：
 
@@ -1302,7 +1377,6 @@ C-M-h                  标记一个函数
   4. 如果你觉得每次为了关闭一个buffer都要按C-x k很麻烦,那么你可以这样绑定:
 
     (global-set-key (kbd "<M-f4>") (lambda () (interactive) (kill-buffer (current-buffer)))
-
 
 *** 常用配置
 **** 1
