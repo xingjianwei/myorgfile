@@ -1,3 +1,9 @@
+#+STARTUP: overview 
+#+TAGS: { 桌面(d) 服务器(s) }  编辑器(e) 浏览器(f) 多媒体(m) 压缩(z)
+#+TAGS:  { @Windows(w)  @Linux(l) @ThreadX(T)}  
+#+TAGS:  { 糟糕(1) 凑合(2) 不错(3) 很好(4) 极品(5) } 
+#+SEQ_TODO: TODO(T) WAIT(W) | DONE(D!) CANCELED(C@/!) 
+#+COLUMNS: %10ITEM  %10PRIORITY %15TODO %65TAGS
 * 学习
 ** 版本管理工具
 *** git
@@ -117,7 +123,31 @@ make-kpkg -initrd --initrd --append-to-version=dellr710 kernel_image kernel-head
 
       　　写缓存实际上就是将要写入磁盘的数据先保存于系统为写缓存分配的内存空间中，当保存到内存池中的数据达到一个程度时，便将数据保存到硬盘中。这样可以减少实际的磁盘操作，有效的保护磁盘免于重复的读写操作而导致的损坏，也能减少写入所需的时间。（这里的磁盘缓存不是最上面的磁盘缓存）
 
-** Emacs
+*** SGPIO
+具有SGPIO功能的SAS/SATA背板
+http://site.doit.com.cn/action-blogdetail-uid-20191-id-5171
+SGPIO 是英文 Serial General Purpose Input/Output 的缩写,SGPIO总线共有4根信号线,用于SAS/SATA 控制卡HBA与硬盘背板之间的通讯,HBA通过SGPIO来获得背板上的硬盘插座状况和发出硬盘LED状态指示信号.在这4根线中有3根是由HBA驱动,1根由背板驱动.SGPIO总线与MiniSAS线放在一根电缆中,以方便HBA与背板的连接.
+SGPIO4根线的定义如下:
+SClock: 由HBA驱动的时钟线,最大的时钟频率是100kHz(典型的是48kHz)
+Sload:  这根线与Sclock是同步的,主要用来指示一帧新数据的开始.当Sload至少有5个时钟低电平后,在Sclock脉冲上升时Sload跟随变为高表示一帧新的SGPIO数据开始,在随后4个时钟脉冲对应的4-Bit Sload数据规范没有明确定义,不同HBA厂商的定义也不同.
+SDataOut: 这根线由HBA输出硬盘状态信号.
+SDataIn: 这根线由背板向HBA提供背板上的状况.第1位高电平表示该槽位已插入硬盘,随后的2位通常是低电平.
+我们设计的具有SGPIO功能的SAS背板如下图所示,背板上每块硬盘有两个LED,一个单色LED用于指示硬盘是否插入并上电,一个双色LED用来指示硬盘Activity,Fault,Rebuild,Locate状况.
+
+SES机箱管理知识回顾（五）之SGPIO
+http://songchengyong.blog.51cto.com/688897/149276
+之前回顾了SES的基础知识以及几种在实际应用下的实现方式，最后说一下SGPIO，通用串行输入/输出总线。很多做硬件设计的同学对GPIO，通用输入/输出非常的了解，而SGPIO是把通用目的I/O信号来串行化的一种方法。SGPIO定义了Initiator初始端(比如一个主机适配器)和Target目的端（比如放置磁盘的背板）之间的通信，通常情况下Target目的端可以把Initiator初始端的输出信号转换成多个并行的LED信号。
+      其实SGPIO是和SES没有任何关系的标准，SES是通过SCSI的命令集来实现对磁盘状态灯、温度、风扇等元素的管理，而SGPIO相对于SES来说功能简单的很多，仅仅是对磁盘状态灯的管理。比如，RAID5组中的某个磁盘由于ECC错误导致“Failed”掉线，RAID5变成Degraded降级状态，而这个时候Initiator控制端比如卡或者控制器等，可以通过SGPIO来让那颗磁盘的状态灯变成红色，从而系统管理员可以发现并更换问题磁盘。
+        SGPIO总线共有四个信号线，分别是SClock，SLoad，SDataOut，SDataIn，如下图所示，其中前3个是从Initiator发送到Target的，而最后一个是从Target发送到Initiator。SClock是时钟信号，SLoad是一个位流传输的最后时钟，SDataOut是串行的数据输出位流，而SDataIn是串行的数据输入位流，SDataIn不是所有的SGPIO设备都支持的，是可选的。
+ 
+          SGPIO总线通过以上4组信号就可以控制磁盘灯的状态，一般来说支持3种状态，Activity，Locate和Error。这是一个相对比较独立的标准，因为它独立的定义了物理层、协议层和应用层等等。在实际的应用中，目前最为流行的莫过于在SAS HBA或者RAID卡的X4宽接口中，如果卡端支持SGPIO的话，这种宽接口标准正好包含了除了数据通路之外的SGPIO信号接口，如下图所示，通过一个统一的包含数据、SGPIO信号的线缆就可以实现数据的传输以及磁盘信号灯的控制，实现方式比较简单。SES Over I2C是通过卡上面的I2C接口采用特殊的线缆来管理，所以可以称作带外管理；而对于SGPIO来说，可以称作带内管理。
+        当然，除了卡支持SGPIO外，磁盘背板也需要支持SGPIO，而目前最为流行的是采用AMI公司的9071/9072芯片，这种芯片支持两种方式的机箱管理，一种是SES Over I2C，另外一种就是SGPIO。对于SGPIO标准的详细定义，可以参照SFF-8485的规格书，由SFF标准委员会制定,
+** Emacs								:编辑器:
+*** ecb cedet
+在emacs23.3下，安装cedet cvs版本。http://cedet.sourceforge.net/bzr-repo.shtml
+bzr checkout bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk cedet
+查看版本使用命令：cedet-version
+使用ecb snapshot版本（2.40应该也可以）。修改文件ecb-cedet-wrapper.el中的版本检查为1.1beta。
 *** mew
 **** 配置参数介绍
 https://code.google.com/p/vvoodys/source/browse/trunk/howto/mew-howto-cn.txt?spec=svn24&r=24
@@ -1094,6 +1124,9 @@ mew-win32.el
  (if async
      (mew-mime-start-process program options (dired-replace-in-string "/" "\\" file) );yxf
    (mew-mime-call-process program options (dired-replace-in-string "/" "\\" file) ))))));把路径中/改为"\"，以便explorer识别。
+*** org mode
+http://www.yifeiyang.net/emacs/org-mode-tutorial.html
+http://i.linuxtoy.org/docs/guide/ch32s03.html
 *** latex
 暂时使用原来保持的格式存储，将内容拷贝过。
 
@@ -2256,3 +2289,9 @@ emacs23的使用
  
 
 ;;========================== 方便编程操作设置结束====================================
+
+** 单片机
+PIC单片机技术资料
+http://www.pic16.com/jszl/jszl.htm
+MPLAB IDE 集成开发环境下载地址
+http://www.microchip.com/stellent/idcplg?IdcService=SS_GET_PAGE&nodeId=1406&dDocName=en019469&part=SW007002
