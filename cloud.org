@@ -1,3 +1,119 @@
+* 硬件设备
+* 虚拟机软件
+** VMWARE
+** XEN
+** KVM
+* 邮件系统
+简介
+       我们的开源企业级邮件系统包括服务器端及Web客户端两部分。其中服务器端有Postfix、Sendmail及Qmail三种可选软件，Web客户端有Squirrelmail、Openwebmail及Extmail三种可选软件。
+我们所选的邮件服务器及Web客户端，均为目前世界上使用最广泛，评价最高的软件，但它们又各具特点，能够满足不同企业的需求。
+** 服务器
+        Sendmail
+        是最成熟的MTA之一，是目前大多数邮件系统的鼻祖。它被设计得比较灵活，便于配置和运行于各种类型的机器上。Sendmail功能强大，适合习惯Sendmail应用环境和配置、需要非常强大邮件服务器功能的客户群。
+        Qmail
+        是新生代的MTA代表，它以速度快、体积小、易配置安装等特性而著称。它的作者D.J.Bernstein是一位数学教授。Qmail于1995年开始开发，1996年发布0.70版本，迅速成为最有名的MTA之一。对于需要建立中小型邮件系统的用户非常适合。
+        Postfix
+        Postfix的作者Wietse Venema是一名著名的安全专家。它起源于1996年，当时称为Vmailer，于1998年11月正式更名为Postfix。由于作者的设计理念独到，经过7-8年时间，Postfix现今已发展成为功能非常丰富、扩展性和安全性非常强的优秀MTA。Postfix适合高流量大负载的系统，其扩展能力较强。
+3、产品特点
+        Sendmail
+功能强大
+理念先进，很多先进功能都在Sendmail上最先由实现
+良好的技术框架
+配置相对复杂
+性能良好
+        Qmail
+体积非常小巧
+模块化设计、基本功能齐全
+配置相对简单
+补丁插件非常丰富
+扩展能力不够
+        Postfix
+流水线、模块化设计，兼顾了效率与功能
+配置灵活
+功能及扩展性强
+速度快、稳定
+开发工作活跃
+** 客户端
+*** zimbra
+http://www.zimbra.com/index.html
+Zimbra是一个开源的邮件系统，其操作界面和 Gmail 类似，Zimbra 把 Ajax 运用得淋漓尽致，甚至有过之而无不及。它还运用了 Javascript 的 Prototype ，诸如 drag and drop 也用上了（移动邮件到其他目录的操作）
+Zimbra Collaboration Suite - Open Source Edition
+ubuntu 10.04版本：577MB
+源代码编译：
+http://wiki.zimbra.com/wiki/Building_Zimbra_using_Perforce
+采用版本控制软件工具：P4V: Visual Client
+http://www.perforce.com/perforce/downloads/platform.html
+ - Java Development Kit (version 1.5.0_04 is recommended) from
+      http://java.sun.com/.  The bin directory containing the javac,
+      java, jar, etc. commands must be in your PATH.
+
+    - Apache Ant (minimum version 1.6.2) from http://ant.apache.org.
+      Make sure the ant command is in your PATH.
+
+    - Install gcc and its friends.  You will need this if you are
+      rebuilding any of our pre-compiled binaries.
+
+    - Install rpm-build.  This is required for building a binary
+      release with RPMs.
+
+    - Install 'which' - this package is not present in a minimal
+      operating system install.
+
+*** ExtMail Project
+http://wiki.extmail.org/
+ExtMail Solution
+ 是一个基于优秀开源软件的电子邮件系统解决方案，核心部件包括了Postfix、Amavisd-new、ClamAV、ExtMail、ExtMan、Courier系列软件。是一个功能相对比较齐全的免费电子邮件系统。以下是其主要的特性列表：
+主要特性
+支持SMTP/POP3/HTTP协议
+支持SMTP认证及ESMTP
+可支持大容量邮箱(大于1GB）
+高速Web界面访问邮箱
+完整的Web管理后台
+在线服务端病毒过滤
+内建内容过滤
+SMTP行为识别垃圾邮件
+支持大量反垃圾邮件技术
+图形化邮件日志分析
+支持别名/多域/域管理员等
+支持网络磁盘/POP3邮件
+支持读/写HTML格式邮件
+支持定制模板及多语言 
+
+邮件解决方案的软件组成：
+功能模块 	功能模块2 	功能模块2
+操作系统（OS） 	CentOS 4.7 	CentOS和RHEL是一样的，而且升级免费
+邮件传输代理（MTA） 	postfix-2.6.2 	使用最新版本2.6.2
+数据库/目录服务 	MySQL 4.1.X 	CentOS 自带
+邮件投递代理（MDA） 	maildrop 2.0.x 	支持过滤和强大功能
+Web帐户管理后台 	ExtMan 1.0 	支持无限域名、无限用户
+WebMail 系统 	ExtMail 1.1.0 	支持多语言、全部模板化，功能基本齐全
+防病毒软件（Anti-Virus）	ClamAV 0.95.2 	最热门的开源杀毒软件
+SMTP阶段反垃圾邮件工具 	Spam Locker 0.99 	基于SMTP行为识别的Antispam软件，大量可选插件
+内容过滤器 	Amavisd-new 2.6.4 	Content-Filter软件，支持与Camav/SA的挂接
+内容级别的反垃圾邮件工具 	SpamAssassin-3.2.4 	著名的SA，可以支持大量规则
+SMTP认证库 	Cyrus SASL 2.x 	标准的SASL实现库，可以支持Courier authlib
+其他数据认证库 	Courier Authlb 0.57 	负责courier-imap,maildrop的认证
+日志分析及显示 	mailgraph_ext 	在ExtMan中已经包含了
+Web 服务器 	Apache 2.0.x 	CentOS 自带
+高效的反垃圾邮件工具 	Dspam-3.8 	高精确度的、智能的过滤功能 
+*** Zarafa
+www.zarafa.com
+Zarafa是一个商业性协作式软件解决方案，提供了email和webmail服务，地址簿，日历，笔记，任务等。其设计目的是与微软的Office Outlook整合，替代Microsoft Exchange。
+
+9月18日，Zarafa宣布在AGPL许可证下发布完整的服务端源代码，这不仅包括了可与Outlook结合的邮件服务器，还包括了100% MAPI，web access，tasks，iCal和Activesync。
+*** iredmail
+http://www.iredmail.org/
+*** hMailServer
+http://www.hmailserver.com/
+windows下的邮件系统
+*** SquirrelMail 
+http://www.squirrelmail.org/
+*** openwebmail
+http://openwebmail.org/
+*** Openmailadmin
+http://openmailadmin.ossdl.de/
+
+
 * 协同办公软件
 ** 易度云办公
 http://everydo.com/
